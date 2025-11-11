@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  @apply bg-gradient-to-br from-[#0b4ab9] via-[#3c86f1] to-[#b6e6ff] text-slate-800 antialiased;
+}
+
+/* Glass */
+.glass {
+  @apply bg-white/20 backdrop-blur-lg border border-white/30 shadow-glass rounded-3xl;
+}
+
+/* Buttons */
+.btn {
+  @apply inline-flex items-center justify-center rounded-full px-6 py-3 font-semibold transition-all;
+}
+.btn-primary {
+  @apply bg-gradient-to-r from-skyup-purple to-skyup-teal text-white hover:opacity-90;
+}
+.btn-ghost {
+  @apply bg-white/10 text-white hover:bg-white/20;
+}
+
+/* Loader optional */
+@keyframes glow-wipe {
+  0% { transform: translateX(-100%) skewX(-15deg); opacity: 0.2; }
+  50% { transform: translateX(10%) skewX(-15deg); opacity: 0.8; }
+  100% { transform: translateX(120%) skewX(-15deg); opacity: 0; }
+}
+.loader-wipe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(255,255,255,0.3), rgba(255,255,255,0));
+  filter: blur(8px);
+  animation: glow-wipe 1.8s ease-in-out 0.2s 1;
+}
+
+.lottie-overlay {
+  mix-blend-mode: overlay;
+  opacity: 0.5;
+}
