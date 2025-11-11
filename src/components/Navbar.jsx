@@ -41,7 +41,7 @@ export default function Navbar() {
         {open && (
           <div className="mt-2 glass flex flex-col gap-2 p-3 md:hidden">
             <NavItem to="/">Home</NavItem>
-            <NavItem to="/courses">Courses</NavItem>
+            <NavItem to="/courses">Course</NavItem>
             <NavItem to="/tools">Tools</NavItem>
             <NavItem to="/about">About</NavItem>
             <NavItem to="/contact">Contact</NavItem>
