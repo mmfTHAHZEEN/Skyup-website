@@ -3,6 +3,9 @@ import Marquee from "react-fast-marquee";
 import LottieBlob from "../components/LottieBlob";
 import LottieLayeredBlobs from "../components/LottieLayeredBlobs";
 
+// ⭐ Add your student image here
+import studentImg from "../assets/student.png"; // ← add your image file
+
 const testimonials = [
   {
     name: "Ahmed Rizzi",
@@ -38,28 +41,55 @@ export default function Home() {
   return (
     <>
       {/* 🌟 HERO SECTION */}
-      <section className="min-h-screen flex flex-col items-center justify-center text-center text-white">
-        <motion.h1
+      <section className="min-h-[90vh] flex flex-col md:flex-row items-center justify-center px-8 md:px-20 text-center md:text-left text-white relative overflow-hidden">
+        {/* Left Content */}
+        <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-5xl font-bold"
+          className="flex-1 z-10"
         >
-          Welcome to <span className="text-skyup-teal">SkyUp Campus</span>
-        </motion.h1>
+          <h1 className="text-5xl md:text-6xl font-bold leading-tight">
+            Welcome to{" "}
+            <span className="bg-gradient-to-r from-skyup-purple to-skyup-teal bg-clip-text text-transparent">
+              SkyUp Campus
+            </span>
+          </h1>
 
-        <p className="mt-4 text-white/80 text-lg">
-          Learn freelancing, design & development — Build your future.
-        </p>
+          <p className="mt-5 text-white/80 text-lg md:text-xl max-w-lg">
+            Learn freelancing, design & development — Build your future with
+            expert-led courses and real-world projects.
+          </p>
 
-        <div className="mt-8 flex gap-4">
-          <a href="/signup" className="btn btn-primary">
-            Get Started
-          </a>
-          <a href="/tools" className="btn btn-ghost">
-            Explore Tools
-          </a>
-        </div>
+          <div className="mt-8 flex flex-wrap gap-4 justify-center md:justify-start">
+            <a href="/signup" className="btn btn-primary">
+              Get Started
+            </a>
+            <a href="/tools" className="btn btn-ghost">
+              Explore Tools
+            </a>
+          </div>
+        </motion.div>
+
+        {/* Right Image Section */}
+        <motion.div
+          initial={{ opacity: 0, x: 60 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1, delay: 0.3 }}
+          className="flex-1 flex justify-center mt-10 md:mt-0 relative"
+        >
+          {/* Soft glow blob behind image */}
+          <div className="absolute top-10 left-10 w-[380px] h-[380px] bg-gradient-to-tr from-skyup-teal/40 via-skyup-purple/30 to-transparent blur-[120px] rounded-full animate-pulse-slow"></div>
+
+          <motion.img
+            src={studentImg}
+            alt="Student with laptop and books"
+            className="relative z-10 rounded-3xl shadow-2xl object-cover w-[320px] md:w-[420px] lg:w-[480px]"
+            initial={{ y: 20 }}
+            animate={{ y: [20, -10, 20] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          />
+        </motion.div>
       </section>
 
       {/* 💬 TESTIMONIALS SECTION */}
@@ -101,29 +131,25 @@ export default function Home() {
           ))}
         </Marquee>
 
-          <section className="relative mx-auto max-w-7xl px-4 text-white">
-            <LottieBlob />
-            <div className="glass grid md:grid-cols-2 overflow-hidden relative z-10">
-            </div>
-          </section>
-
-          <section className="relative mx-auto max-w-7xl px-4 text-white">
-            <LottieLayeredBlobs />
-            <div className="relative z-10 glass grid md:grid-cols-2 overflow-hidden">
-              {/* your hero content */}
-            </div>
-          </section>
-
-          <section className="relative mx-auto max-w-7xl px-4 mt-20 text-white overflow-hidden">
-            <LottieLayeredBlobs />
-            <div className="relative z-10">
-              {/* testimonials carousel */}
-            </div>
-          </section>
-
         <p className="text-center mt-6 text-white/60 text-sm">
           (Hover to pause the scrolling)
         </p>
+      </section>
+
+      {/* 🔮 Decorative Lottie sections */}
+      <section className="relative mx-auto max-w-7xl px-4 text-white">
+        <LottieBlob />
+        <div className="glass grid md:grid-cols-2 overflow-hidden relative z-10"></div>
+      </section>
+
+      <section className="relative mx-auto max-w-7xl px-4 text-white">
+        <LottieLayeredBlobs />
+        <div className="relative z-10 glass grid md:grid-cols-2 overflow-hidden"></div>
+      </section>
+
+      <section className="relative mx-auto max-w-7xl px-4 mt-20 text-white overflow-hidden">
+        <LottieLayeredBlobs />
+        <div className="relative z-10"></div>
       </section>
     </>
   );
