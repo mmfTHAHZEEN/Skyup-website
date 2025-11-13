@@ -1,10 +1,16 @@
 import { motion } from "framer-motion";
 import Marquee from "react-fast-marquee";
+import Lottie from "react-lottie-player";
 import LottieBlob from "../components/LottieBlob";
 import LottieLayeredBlobs from "../components/LottieLayeredBlobs";
 
-// ⭐ Add your student image here
-import studentImg from "../assets/student.png"; // ← add your image file
+// ✨ Your existing student hero image
+import studentImg from "../assets/student-laptop.png";
+
+// ✨ Small floating icons (download small JSONs from LottieFiles)
+import floatingBook from "../assets/lottie-book.json";
+import floatingLaptop from "../assets/lottie-laptop.json";
+import floatingCode from "../assets/lottie-code.json";
 
 const testimonials = [
   {
@@ -40,9 +46,17 @@ const testimonials = [
 export default function Home() {
   return (
     <>
-      {/* 🌟 HERO SECTION */}
-      <section className="min-h-[90vh] flex flex-col md:flex-row items-center justify-center px-8 md:px-20 text-center md:text-left text-white relative overflow-hidden">
-        {/* Left Content */}
+      {/* 🌟 HERO SECTION (same structure) */}
+      <section className="hero-bg min-h-[90vh] flex flex-col md:flex-row items-center justify-center px-8 md:px-20 text-center md:text-left text-white relative overflow-hidden">
+      {/* 🌌 Floating background bubbles */}
+      <div className="bubble-container">
+        {Array.from({ length: 20 }).map((_, i) => (
+          <div key={i} className={`bubble2 bubble-${i + 1}`}></div>
+        ))}
+      </div>
+
+
+        {/* Left text block (unchanged) */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
@@ -55,12 +69,10 @@ export default function Home() {
               SkyUp Campus
             </span>
           </h1>
-
           <p className="mt-5 text-white/80 text-lg md:text-xl max-w-lg">
             Learn freelancing, design & development — Build your future with
             expert-led courses and real-world projects.
           </p>
-
           <div className="mt-8 flex flex-wrap gap-4 justify-center md:justify-start">
             <a href="/signup" className="btn btn-primary">
               Get Started
@@ -71,16 +83,17 @@ export default function Home() {
           </div>
         </motion.div>
 
-        {/* Right Image Section */}
+        {/* Right side image + subtle floating icons */}
         <motion.div
           initial={{ opacity: 0, x: 60 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, delay: 0.3 }}
           className="flex-1 flex justify-center mt-10 md:mt-0 relative"
         >
-          {/* Soft glow blob behind image */}
-          <div className="absolute top-10 left-10 w-[380px] h-[380px] bg-gradient-to-tr from-skyup-teal/40 via-skyup-purple/30 to-transparent blur-[120px] rounded-full animate-pulse-slow"></div>
+          {/* Glow behind student */}
+          <div className="absolute inset-0 bg-gradient-to-tr from-skyup-teal/40 via-skyup-purple/30 to-transparent blur-[120px] rounded-full animate-pulse-slow"></div>
 
+          {/* Floating student image */}
           <motion.img
             src={studentImg}
             alt="Student with laptop and books"
@@ -89,10 +102,35 @@ export default function Home() {
             animate={{ y: [20, -10, 20] }}
             transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
           />
+
+          {/* Floating animated icons (books, laptop, code) */}
+          <motion.div
+            className="absolute -left-10 top-10 w-24 h-24"
+            animate={{ y: [0, -15, 0], rotate: [0, 10, 0] }}
+            transition={{ duration: 7, repeat: Infinity }}
+          >
+            <Lottie loop play animationData={floatingBook} />
+          </motion.div>
+
+          <motion.div
+            className="absolute right-0 bottom-0 w-24 h-24"
+            animate={{ y: [10, -20, 10], rotate: [0, -10, 0] }}
+            transition={{ duration: 6, repeat: Infinity, delay: 1 }}
+          >
+            <Lottie loop play animationData={floatingLaptop} />
+          </motion.div>
+
+          <motion.div
+            className="absolute right-16 top-16 w-20 h-20"
+            animate={{ y: [-10, 15, -10], rotate: [0, 5, 0] }}
+            transition={{ duration: 5, repeat: Infinity, delay: 2 }}
+          >
+            <Lottie loop play animationData={floatingCode} />
+          </motion.div>
         </motion.div>
       </section>
 
-      {/* 💬 TESTIMONIALS SECTION */}
+      {/* 💬 TESTIMONIALS SECTION (untouched) */}
       <section className="mx-auto max-w-7xl px-4 mt-20 text-white overflow-hidden">
         <motion.h2
           initial={{ opacity: 0, y: 40 }}
@@ -104,7 +142,7 @@ export default function Home() {
           What Our <span className="text-skyup-teal">Students Say</span>
         </motion.h2>
 
-        <Marquee pauseOnHover={true} gradient={false} speed={40} className="gap-6">
+        <Marquee pauseOnHover gradient={false} speed={40} className="gap-6">
           {testimonials.map((t, i) => (
             <div
               key={i}
@@ -136,7 +174,7 @@ export default function Home() {
         </p>
       </section>
 
-      {/* 🔮 Decorative Lottie sections */}
+      {/* Decorative backgrounds (unchanged) */}
       <section className="relative mx-auto max-w-7xl px-4 text-white">
         <LottieBlob />
         <div className="glass grid md:grid-cols-2 overflow-hidden relative z-10"></div>
@@ -145,11 +183,6 @@ export default function Home() {
       <section className="relative mx-auto max-w-7xl px-4 text-white">
         <LottieLayeredBlobs />
         <div className="relative z-10 glass grid md:grid-cols-2 overflow-hidden"></div>
-      </section>
-
-      <section className="relative mx-auto max-w-7xl px-4 mt-20 text-white overflow-hidden">
-        <LottieLayeredBlobs />
-        <div className="relative z-10"></div>
       </section>
     </>
   );
