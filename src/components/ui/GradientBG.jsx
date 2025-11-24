@@ -1,8 +1,8 @@
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import { useEffect } from "react";
-import blobBlue from "../assets/blobBlue.json";
-import blobPink from "../assets/blobPink.json";
-import blobTeal from "../assets/blobTeal.json";
+import blobBlue from "../../assets/blobBlue.json";
+import blobPink from "../../assets/blobPink.json";
+import blobTeal from "../../assets/blobTeal.json";
 
 
 export default function GradientBG() {

@@ -1,7 +1,7 @@
 import Lottie from "react-lottie-player";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import { useEffect } from "react";
-import blob from "../assets/blob.json"; // ✅ Make sure blob.json exists in src/assets/
+import blob from "../../assets/blob.json"; // ✅ Make sure blob.json exists in src/assets/
 
 export default function LottieBlob() {
   const mx = useMotionValue(0);

@@ -1,16 +1,17 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
-import GradientBG from "./components/GradientBG";
-import CursorGlow from "./components/CursorGlow";
-import ScrollProgress from "./components/ScrollProgress";
+import Navbar from "./components/layout/Navbar.jsx";
+import Footer from "./components/layout/Footer.jsx";
+import GradientBG from "./components/ui/GradientBG.jsx";
+import CursorGlow from "./components/ui/CursorGlow.jsx";
+import ScrollProgress from "./components/ui/ScrollProgress.jsx";
 import Home from "./pages/Home";
 import Courses from "./pages/Courses";
 import Tools from "./pages/Tools";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Auth from "./pages/Auth";
+import Instructors from "./pages/Instructors.jsx";
 
 export default function App() {
   return (
@@ -36,6 +37,7 @@ export default function App() {
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/auth" element={<Auth />} />
+            <Route path="/instructors" element={<Instructors />} />
           </Routes>
         </motion.main>
       </AnimatePresence>

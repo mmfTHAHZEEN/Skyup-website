@@ -2,56 +2,74 @@
 @tailwind components;
 @tailwind utilities;
 
+/* GLOBAL LAYOUT RESET */
 html, body, #root {
   height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
 }
 
 body {
-  @apply bg-gradient-to-br from-[#0b4ab9] via-[#3c86f1] to-[#b6e6ff] text-slate-800 antialiased;
+  @apply bg-gradient-to-br from-[#0b4ab9] via-[#3c86f1] to-[#b6e6ff];
+  @apply text-slate-100 antialiased;
 }
 
-/* Glass */
+/* GLOBAL CONTAINER */
+.container-default {
+  @apply mx-auto max-w-7xl px-6 md:px-10 lg:px-20;
+}
+
+/* GLASS EFFECT */
 .glass {
-  @apply bg-white/20 backdrop-blur-lg border border-white/30 shadow-glass rounded-3xl;
+  @apply bg-white/10 backdrop-blur-lg border border-white/20 shadow-xl;
+  @apply rounded-3xl;
 }
 
-/* Buttons */
+/* BUTTONS */
 .btn {
-  @apply inline-flex items-center justify-center rounded-full px-6 py-3 font-semibold transition-all;
+  @apply inline-flex items-center justify-center px-5 py-3 rounded-xl font-medium transition-all;
 }
+
 .btn-primary {
-  @apply bg-gradient-to-r from-skyup-purple to-skyup-teal text-white hover:opacity-90;
+  @apply bg-gradient-to-r from-skyup-purple to-skyup-teal text-white shadow-lg;
 }
+.btn-primary:hover {
+  @apply opacity-90 shadow-xl;
+}
+
 .btn-ghost {
   @apply bg-white/10 text-white hover:bg-white/20;
 }
 
-/* Loader optional */
-@keyframes glow-wipe {
-  0% { transform: translateX(-100%) skewX(-15deg); opacity: 0.2; }
-  50% { transform: translateX(10%) skewX(-15deg); opacity: 0.8; }
-  100% { transform: translateX(120%) skewX(-15deg); opacity: 0; }
-}
-.loader-wipe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 60%;
-  height: 100%;
-  background: linear-gradient(90deg, rgba(255,255,255,0.3), rgba(255,255,255,0));
-  filter: blur(8px);
-  animation: glow-wipe 1.8s ease-in-out 0.2s 1;
+/* SECTION SPACING */
+.section {
+  @apply py-20;
 }
 
-.lottie-overlay {
-  mix-blend-mode: overlay;
-  opacity: 0.5;
+/* HEADINGS */
+.h1 {
+  @apply text-4xl md:text-5xl font-bold;
+}
+.h2 {
+  @apply text-3xl md:text-4xl font-bold;
+}
+.h3 {
+  @apply text-2xl font-semibold;
 }
 
-html {
-  scroll-behavior: smooth;
+/* RESPONSIVE GRID FIXES */
+.grid-responsive {
+  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8;
 }
 
-section {
-  scroll-margin-top: 100px;
+/* ANIMATION UTILITIES */
+.animate-float {
+  animation: floatAnim 6s ease-in-out infinite;
+}
+@keyframes floatAnim {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+  100% { transform: translateY(0px); }
 }

@@ -1,55 +1,115 @@
-import { useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
-import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import authImage from "../assets/student-laptop.png"; // update if needed
 
 export default function Signup() {
-  const [show, setShow] = useState(false);
-
   return (
-    <section className="mx-auto max-w-5xl px-4 text-white">
-      <div className="glass grid md:grid-cols-2 overflow-hidden">
-        <img
-          src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200"
-          className="h-[480px] object-cover"
-        />
-        <div className="p-10">
-          <h2 className="text-center text-3xl font-bold mb-6">
-            Join <span className="text-skyup-teal">SkyUp Campus</span>
-          </h2>
+    <section className="hero-bg min-h-[100vh] flex items-center justify-center px-6 md:px-10 lg:px-20 py-16">
+      
+      <div className="max-w-4xl w-full grid grid-cols-1 lg:grid-cols-2 glass 
+                      rounded-3xl overflow-hidden backdrop-blur-lg shadow-2xl">
+
+        {/* ------------------------------ LEFT IMAGE ------------------------------ */}
+        <motion.div
+          initial={{ opacity: 0, x: -40 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8 }}
+          className="hidden lg:block"
+        >
+          <img
+            src={authImage}
+            alt="SkyUp Signup"
+            className="h-full w-full object-cover rounded-l-3xl"
+          />
+        </motion.div>
+
+        {/* ------------------------------ SIGNUP FORM ------------------------------ */}
+        <motion.div
+          initial={{ opacity: 0, x: 40 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8 }}
+          className="p-10 md:p-14 flex flex-col justify-center text-white"
+        >
+          {/* Heading */}
+          <h1 className="text-4xl md:text-5xl font-bold mb-3">
+            Create Account
+          </h1>
+
+          {/* Sub heading */}
+          <p className="text-white/70 mb-8 text-base md:text-lg">
+            Join <span className="text-skyup-teal font-semibold">SkyUp Campus</span>  
+            and start learning with premium tools and expert mentorship.
+          </p>
+
+          {/* Signup Form */}
           <form className="space-y-5">
-            <input
-              type="text"
-              placeholder="Full Name"
-              className="w-full rounded-xl border-0 bg-white/20 text-white placeholder-white/70 focus:ring-2 focus:ring-white"
-            />
-            <input
-              type="email"
-              placeholder="Email Address"
-              className="w-full rounded-xl border-0 bg-white/20 text-white placeholder-white/70 focus:ring-2 focus:ring-white"
-            />
-            <div className="relative">
+
+            {/* Full Name */}
+            <div>
+              <label className="text-white/70 text-sm mb-1 block">Full Name</label>
               <input
-                type={show ? "text" : "password"}
-                placeholder="Create Password"
-                className="w-full rounded-xl border-0 bg-white/20 text-white placeholder-white/70 focus:ring-2 focus:ring-white pr-10"
+                type="text"
+                className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 
+                text-white focus:outline-none focus:ring-2 focus:ring-skyup-teal"
               />
-              <button
-                type="button"
-                onClick={() => setShow(!show)}
-                className="absolute right-3 top-3 text-white/80"
-              >
-                {show ? <EyeOff /> : <Eye />}
-              </button>
             </div>
-            <button className="btn btn-primary w-full">Create Account</button>
-            <p className="text-center text-white/70 text-sm">
-              Already have an account?{" "}
-              <Link to="/login" className="text-skyup-teal underline">
-                Login
-              </Link>
-            </p>
+
+            {/* Email */}
+            <div>
+              <label className="text-white/70 text-sm mb-1 block">Email</label>
+              <input
+                type="email"
+                className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 
+                text-white focus:outline-none focus:ring-2 focus:ring-skyup-teal"
+              />
+            </div>
+
+            {/* Phone Number */}
+            <div>
+              <label className="text-white/70 text-sm mb-1 block">Phone Number</label>
+              <input
+                type="text"
+                className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 
+                text-white focus:outline-none focus:ring-2 focus:ring-skyup-teal"
+              />
+            </div>
+
+            {/* Password */}
+            <div>
+              <label className="text-white/70 text-sm mb-1 block">Password</label>
+              <input
+                type="password"
+                className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 
+                text-white focus:outline-none focus:ring-2 focus:ring-skyup-teal"
+              />
+            </div>
+
+            {/* Confirm Password */}
+            <div>
+              <label className="text-white/70 text-sm mb-1 block">Confirm Password</label>
+              <input
+                type="password"
+                className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 
+                text-white focus:outline-none focus:ring-2 focus:ring-skyup-teal"
+              />
+            </div>
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              className="btn btn-primary w-full py-3 text-lg shadow-lg hover:shadow-skyup-teal/40"
+            >
+              Create Account
+            </button>
           </form>
-        </div>
+
+          {/* Switch to Login */}
+          <p className="text-white/60 text-sm mt-6 text-center">
+            Already have an account?{" "}
+            <a href="/login" className="text-skyup-teal underline">
+              Login here
+            </a>
+          </p>
+        </motion.div>
       </div>
     </section>
   );

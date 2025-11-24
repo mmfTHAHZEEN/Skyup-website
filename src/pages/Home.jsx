@@ -1,14 +1,16 @@
 import { motion } from "framer-motion";
 import Marquee from "react-fast-marquee";
 import Lottie from "react-lottie-player";
-import LottieBlob from "../components/LottieBlob";
-import LottieLayeredBlobs from "../components/LottieLayeredBlobs";
+import LottieBlob from "../components/ui/LottieBlob";
+import LottieLayeredBlobs from "../components/ui/LottieLayeredBlobs";
 import studentImg from "../assets/student-laptop.png";
 import floatingBook from "../assets/lottie-book.json";
 import floatingLaptop from "../assets/lottie-laptop.json";
 import floatingCode from "../assets/lottie-code.json";
-import Navbar from "../components/Navbar";
-
+import Navbar from "../components/layout/Navbar";
+import "../index.css";  
+import Footer from "../components/layout/Footer";
+import Instructors from "./Instructors";
 /* --------------------------------------------------
    TESTIMONIAL DATA
 -------------------------------------------------- */
@@ -288,32 +290,68 @@ export default function Home() {
         </Marquee>
       </section>
 
-      {/* -----------------------------------------------------
-        CONTACT SECTION
+            {/* -----------------------------------------------------
+          CONTACT SECTION (FIXED)
       ------------------------------------------------------ */}
-      <section id="contact" className="max-w-6xl mx-auto px-6 md:px-12 lg:px-20 mt-32 text-white">
-        <h2 className="text-center text-4xl font-bold mb-14">
+      <section id="contact" className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 mt-32 text-white">
+        <h2 className="text-center text-4xl font-bold mb-12">
           Get in <span className="text-skyup-teal">Touch</span>
         </h2>
 
-        <div className="glass p-10 rounded-3xl grid grid-cols-1 lg:grid-cols-2 gap-10">
-          {/* Address */}
+        <div className="glass p-10 rounded-3xl grid grid-cols-1 lg:grid-cols-2 gap-12">
+
+          {/* LEFT: ADDRESS */}
           <div>
-            <h3 className="text-xl font-semibold mb-3">Our Address</h3>
-            <p>No. 331, Trincomalee, Sri Lanka</p>
-            <p className="mt-2"><strong>Phone:</strong> +94 760007822</p>
-            <p><strong>Email:</strong> skyup.official08@gmail.com</p>
+            <h3 className="text-2xl font-semibold mb-4 text-skyup-teal">Our Address</h3>
+
+            <p className="text-white/80 leading-relaxed">
+              No. 331, Trincomalee, Sri Lanka
+            </p>
+
+            <p className="mt-4 text-white/80">
+              <strong className="text-white">Phone:</strong> +94 760007822
+            </p>
+
+            <p className="mt-1 text-white/80">
+              <strong className="text-white">Email:</strong> skyup.official08@gmail.com
+            </p>
           </div>
 
-          {/* Contact Form */}
+          {/* RIGHT: FIXED FORM */}
           <form className="space-y-5">
-            <input placeholder="Name" className="input" />
-            <input placeholder="Email" className="input" />
-            <input placeholder="Subject" className="input" />
-            <textarea placeholder="Message" rows="4" className="input"></textarea>
 
-            <button className="btn btn-primary w-full">Send Message</button>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <input
+                placeholder="Name"
+                className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 
+                          text-white focus:ring-2 focus:ring-skyup-teal outline-none"
+              />
+
+              <input
+                placeholder="Email"
+                className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 
+                          text-white focus:ring-2 focus:ring-skyup-teal outline-none"
+              />
+            </div>
+
+            <input
+              placeholder="Subject"
+              className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 
+                        text-white focus:ring-2 focus:ring-skyup-teal outline-none"
+            />
+
+            <textarea
+              placeholder="Message"
+              rows="5"
+              className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 
+                        text-white focus:ring-2 focus:ring-skyup-teal outline-none resize-none"
+            ></textarea>
+
+            <button className="btn btn-primary w-full py-3 text-lg shadow-lg hover:shadow-skyup-teal/40">
+              Send Message
+            </button>
           </form>
+
         </div>
       </section>
 

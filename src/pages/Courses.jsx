@@ -3,27 +3,27 @@ import { motion } from "framer-motion";
 /* -------------------- Course Data -------------------- */
 const courses = [
   {
-    title: "WORDPRESS",
+    title: "IT Statistics & Data Science",
     img: "https://images.unsplash.com/photo-1581090700227-1e37b190418e?q=80&w=1200",
   },
   {
-    title: "FIVERR",
+    title: "Adobe Illustrator for Graphic Design",
     img: "https://images.unsplash.com/photo-1587614382346-4ec65b7d3a9f?q=80&w=1200",
   },
   {
-    title: "FREELANCE",
+    title: "SEO for Your Home-Based Business",
     img: "https://images.unsplash.com/photo-1581093458791-9b6c9737e9d7?q=80&w=1200",
   },
   {
-    title: "UI/UX DESIGN",
+    title: "Advanced Freelancing Strategies",
     img: "https://images.unsplash.com/photo-1581092334651-3c7d1f2d6b67?q=80&w=1200",
   },
   {
-    title: "WEB DEVELOPMENT",
+    title: "Fiverr & Upwork Profile Building",
     img: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=1200",
   },
   {
-    title: "Graphic Design",
+    title: "Graphic Design Fundamentals",
     img: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1200",
   },
 ];

@@ -1,9 +1,9 @@
 import Lottie from "react-lottie-player";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import { useEffect } from "react";
-import blobBlue from "../assets/blobBlue.json";
-import blobTeal from "../assets/blobTeal.json";
-import blobPink from "../assets/blobPink.json";
+import blobBlue from "../../assets/blobBlue.json";
+import blobTeal from "../../assets/blobTeal.json";
+import blobPink from "../../assets/blobPink.json";
 
 export default function LottieLayeredBlobs() {
   // Mouse parallax control
