@@ -1,14 +1,13 @@
 import { motion } from "framer-motion";
 import Marquee from "react-fast-marquee";
 import Lottie from "react-lottie-player";
-
 import LottieBlob from "../components/LottieBlob";
 import LottieLayeredBlobs from "../components/LottieLayeredBlobs";
-
 import studentImg from "../assets/student-laptop.png";
 import floatingBook from "../assets/lottie-book.json";
 import floatingLaptop from "../assets/lottie-laptop.json";
 import floatingCode from "../assets/lottie-code.json";
+import Navbar from "../components/Navbar";
 
 /* --------------------------------------------------
    TESTIMONIAL DATA
@@ -96,6 +95,8 @@ const tools = [
 export default function Home() {
   return (
     <>
+      <Navbar />
+
       {/* -----------------------------------------------------
         HERO SECTION
       ------------------------------------------------------ */}
