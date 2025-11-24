@@ -9,6 +9,8 @@ import floatingLaptop from "../assets/lottie-laptop.json";
 import floatingCode from "../assets/lottie-code.json";
 import Navbar from "../components/layout/Navbar";
 import "../index.css";  
+import Hero from "../components/home/Hero";
+import Testimonials from "../components/home/Testimonials";
 import Footer from "../components/layout/Footer";
 import Instructors from "./Instructors";
 /* --------------------------------------------------
