@@ -66,3 +66,16 @@
 .animate-pulse-slow {
   animation: pulse-slow 6s ease-in-out infinite;
 }
+
+.bg-bubble-purple {
+  background: radial-gradient(circle at 30% 30%, rgba(111, 82, 237, 0.5), rgba(111, 82, 237, 0.2));
+}
+
+.bg-bubble-white {
+  background: radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.1));
+}
+
+.blur-3xl {
+  filter: blur(60px);
+}
+

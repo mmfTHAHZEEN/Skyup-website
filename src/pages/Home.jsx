@@ -1,17 +1,18 @@
 import { motion } from "framer-motion";
 import Marquee from "react-fast-marquee";
 import Lottie from "react-lottie-player";
+
 import LottieBlob from "../components/LottieBlob";
 import LottieLayeredBlobs from "../components/LottieLayeredBlobs";
 
-// ✨ Your existing student hero image
 import studentImg from "../assets/student-laptop.png";
-
-// ✨ Small floating icons (download small JSONs from LottieFiles)
 import floatingBook from "../assets/lottie-book.json";
 import floatingLaptop from "../assets/lottie-laptop.json";
 import floatingCode from "../assets/lottie-code.json";
 
+/* --------------------------------------------------
+   TESTIMONIAL DATA
+-------------------------------------------------- */
 const testimonials = [
   {
     name: "Ahmed Rizzi",
@@ -43,147 +44,308 @@ const testimonials = [
   },
 ];
 
+/* --------------------------------------------------
+   COURSE DATA
+-------------------------------------------------- */
+const courses = [
+  {
+    title: "IT Statistics & Data Science",
+    img: "https://images.unsplash.com/photo-1581090700227-1e37b190418e?q=80&w=1200",
+  },
+  {
+    title: "Adobe Illustrator for Graphic Design",
+    img: "https://images.unsplash.com/photo-1587614382346-4ec65b7d3a9f?q=80&w=1200",
+  },
+  {
+    title: "SEO for Your Home-Based Business",
+    img: "https://images.unsplash.com/photo-1581093458791-9b6c9737e9d7?q=80&w=1200",
+  },
+  {
+    title: "Advanced Freelancing Strategies",
+    img: "https://images.unsplash.com/photo-1581092334651-3c7d1f2d6b67?q=80&w=1200",
+  },
+  {
+    title: "Fiverr & Upwork Profile Building",
+    img: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=1200",
+  },
+  {
+    title: "Graphic Design Fundamentals",
+    img: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1200",
+  },
+];
+
+/* --------------------------------------------------
+   TOOLS DATA
+-------------------------------------------------- */
+const tools = [
+  "Canva Pro",
+  "WordPress Premium",
+  "ChatGPT Pro",
+  "Free Software Library",
+  "Fiverr Freelance Tools",
+  "SEO Keyword Kit",
+  "Adobe Illustrator",
+  "UI/UX Templates",
+  "AI Tools",
+];
+
+/* --------------------------------------------------
+   HOME PAGE
+-------------------------------------------------- */
+
 export default function Home() {
   return (
     <>
-      {/* 🌟 HERO SECTION (same structure) */}
-      <section className="hero-bg min-h-[90vh] flex flex-col md:flex-row items-center justify-center px-8 md:px-20 text-center md:text-left text-white relative overflow-hidden">
-      {/* 🌌 Floating background bubbles */}
-      <div className="bubble-container">
-        {Array.from({ length: 20 }).map((_, i) => (
-          <div key={i} className={`bubble2 bubble-${i + 1}`}></div>
-        ))}
-      </div>
+      {/* -----------------------------------------------------
+        HERO SECTION
+      ------------------------------------------------------ */}
+      <section className="hero-bg min-h-[90vh] flex items-center">
+        <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-10 px-6 md:px-12 lg:px-20 relative">
 
-
-        {/* Left text block (unchanged) */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="flex-1 z-10"
-        >
-          <h1 className="text-5xl md:text-6xl font-bold leading-tight">
-            Welcome to{" "}
-            <span className="bg-gradient-to-r from-skyup-purple to-skyup-teal bg-clip-text text-transparent">
-              SkyUp Campus
-            </span>
-          </h1>
-          <p className="mt-5 text-white/80 text-lg md:text-xl max-w-lg">
-            Learn freelancing, design & development — Build your future with
-            expert-led courses and real-world projects.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-4 justify-center md:justify-start">
-            <a href="/signup" className="btn btn-primary">
-              Get Started
-            </a>
-            <a href="/tools" className="btn btn-ghost">
-              Explore Tools
-            </a>
+          {/* Floating Bubbles */}
+          <div className="bubble-container absolute inset-0 -z-10">
+            {Array.from({ length: 18 }).map((_, i) => (
+              <div key={i} className={`bubble2 bubble-${i + 1}`}></div>
+            ))}
           </div>
-        </motion.div>
 
-        {/* Right side image + subtle floating icons */}
-        <motion.div
-          initial={{ opacity: 0, x: 60 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, delay: 0.3 }}
-          className="flex-1 flex justify-center mt-10 md:mt-0 relative"
-        >
-          {/* Glow behind student */}
-          <div className="absolute inset-0 bg-gradient-to-tr from-skyup-teal/40 via-skyup-purple/30 to-transparent blur-[120px] rounded-full animate-pulse-slow"></div>
-
-          {/* Floating student image */}
-          <motion.img
-            src={studentImg}
-            alt="Student with laptop and books"
-            className="relative z-10 rounded-3xl shadow-2xl object-cover w-[320px] md:w-[420px] lg:w-[480px]"
-            initial={{ y: 20 }}
-            animate={{ y: [20, -10, 20] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-          />
-
-          {/* Floating animated icons (books, laptop, code) */}
+          {/* Left Hero Text */}
           <motion.div
-            className="absolute -left-10 top-10 w-24 h-24"
-            animate={{ y: [0, -15, 0], rotate: [0, 10, 0] }}
-            transition={{ duration: 7, repeat: Infinity }}
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+            className="flex flex-col justify-center text-center lg:text-left"
           >
-            <Lottie loop play animationData={floatingBook} />
+            <h1 className="text-5xl md:text-6xl font-extrabold leading-tight">
+              Welcome to{" "}
+              <span className="bg-gradient-to-r from-skyup-purple to-skyup-teal bg-clip-text text-transparent">
+                SkyUp Campus
+              </span>
+            </h1>
+
+            <p className="mt-5 text-white/80 text-lg md:text-xl max-w-lg mx-auto lg:mx-0">
+              Learn freelancing, design & development — Build your future with
+              expert-led courses and real-world projects.
+            </p>
+
+            <div className="mt-8 flex flex-wrap gap-4 justify-center lg:justify-start">
+              <a href="/signup" className="btn btn-primary">Get Started</a>
+              <a href="/tools" className="btn btn-ghost">Explore Tools</a>
+            </div>
           </motion.div>
 
+          {/* Hero Image + floating icons */}
           <motion.div
-            className="absolute right-0 bottom-0 w-24 h-24"
-            animate={{ y: [10, -20, 10], rotate: [0, -10, 0] }}
-            transition={{ duration: 6, repeat: Infinity, delay: 1 }}
+            initial={{ opacity: 0, x: 60 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="relative w-full flex justify-center"
           >
-            <Lottie loop play animationData={floatingLaptop} />
-          </motion.div>
+            <div className="absolute inset-0 bg-gradient-to-tr from-skyup-teal/40 via-skyup-purple/30 to-transparent blur-[110px]" />
 
-          <motion.div
-            className="absolute right-16 top-16 w-20 h-20"
-            animate={{ y: [-10, 15, -10], rotate: [0, 5, 0] }}
-            transition={{ duration: 5, repeat: Infinity, delay: 2 }}
-          >
-            <Lottie loop play animationData={floatingCode} />
+            <motion.img
+              src={studentImg}
+              alt="Student learning at SkyUp Campus"
+              className="relative z-10 rounded-3xl shadow-2xl object-cover w-[320px] md:w-[420px] lg:w-[480px]"
+              animate={{ y: [10, -10, 10] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            />
+
+            <motion.div
+              className="absolute -left-10 top-10 w-20 h-20"
+              animate={{ y: [-10, 10, -10], rotate: [0, 8, 0] }}
+              transition={{ duration: 7, repeat: Infinity }}
+            >
+              <Lottie loop play animationData={floatingBook} />
+            </motion.div>
+
+            <motion.div
+              className="absolute right-0 bottom-5 w-20 h-20"
+              animate={{ y: [10, -12, 10], rotate: [0, -8, 0] }}
+              transition={{ duration: 6, repeat: Infinity }}
+            >
+              <Lottie loop play animationData={floatingLaptop} />
+            </motion.div>
+
+            <motion.div
+              className="absolute right-16 top-14 w-20 h-20"
+              animate={{ y: [-12, 10, -12], rotate: [0, 6, 0] }}
+              transition={{ duration: 5, repeat: Infinity }}
+            >
+              <Lottie loop play animationData={floatingCode} />
+            </motion.div>
           </motion.div>
-        </motion.div>
+        </div>
       </section>
 
-      {/* 💬 TESTIMONIALS SECTION (untouched) */}
-      <section className="mx-auto max-w-7xl px-4 mt-20 text-white overflow-hidden">
+      {/* -----------------------------------------------------
+        ABOUT SECTION
+      ------------------------------------------------------ */}
+      <section id="about" className="max-w-6xl mx-auto px-6 md:px-12 lg:px-20 mt-32 text-white">
         <motion.h2
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          viewport={{ once: true }}
-          className="text-center text-4xl font-bold mb-12"
+          transition={{ duration: 0.6 }}
+          className="text-center text-4xl font-bold mb-8"
         >
-          What Our <span className="text-skyup-teal">Students Say</span>
+          About <span className="text-skyup-teal">SkyUp Campus</span>
         </motion.h2>
 
-        <Marquee pauseOnHover gradient={false} speed={40} className="gap-6">
+        <p className="text-center text-white/80 text-lg max-w-3xl mx-auto leading-relaxed">
+          SkyUp Campus is a modern digital learning platform designed to help students,
+          freelancers, beginners, and career-changers build real-world skills.
+          We focus on practical, industry-level learning through freelancing,
+          software development, UI/UX, marketing, and creative design.
+        </p>
+      </section>
+
+      {/* -----------------------------------------------------
+        COURSES SECTION
+      ------------------------------------------------------ */}
+      <section id="courses" className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 mt-32 text-white">
+        <h2 className="text-center text-4xl font-bold mb-12">
+          Our <span className="text-skyup-teal">Courses</span>
+        </h2>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+          {courses.map((c, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 25 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: i * 0.1 }}
+              viewport={{ once: true }}
+              className="glass rounded-3xl overflow-hidden hover:scale-[1.02] transition-all backdrop-blur-md"
+            >
+              <img src={c.img} alt={c.title} className="h-52 w-full object-cover" />
+              <div className="p-6">
+                <h3 className="font-semibold text-xl">{c.title}</h3>
+                <p className="text-sm text-white/70 mt-2">
+                  Learn from industry professionals and build real-world skills.
+                </p>
+                <button className="btn btn-primary mt-4 w-full">Enroll Now</button>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* -----------------------------------------------------
+        TOOLS SECTION
+      ------------------------------------------------------ */}
+      <section id="tools" className="max-w-6xl mx-auto px-6 md:px-12 lg:px-20 mt-32 text-white">
+        <h2 className="text-center text-4xl font-bold mb-12">
+          SkyUp <span className="text-skyup-teal">Tools</span>
+        </h2>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {tools.map((tool, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 25 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: i * 0.05 }}
+              viewport={{ once: true }}
+              className="glass rounded-2xl p-6 text-center hover:scale-105 transition-all"
+            >
+              <h3 className="text-lg font-semibold">{tool}</h3>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* -----------------------------------------------------
+        TESTIMONIALS SECTION
+      ------------------------------------------------------ */}
+      <section id="testimonials" className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 mt-32 text-white">
+        <h2 className="text-center text-4xl font-bold mb-12">
+          What Our <span className="text-skyup-teal">Students Say</span>
+        </h2>
+
+        <Marquee pauseOnHover gradient={false} speed={40}>
           {testimonials.map((t, i) => (
             <div
               key={i}
-              className="glass p-6 rounded-3xl mx-3 w-[320px] text-white backdrop-blur-md bg-white/10"
+              className="glass p-6 rounded-3xl mx-4 w-[310px] bg-white/10 backdrop-blur-md"
             >
               <div className="flex items-center gap-4 mb-4">
                 <img
                   src={t.img}
                   alt={t.name}
-                  className="h-14 w-14 rounded-full object-cover border-2 border-white/30"
+                  className="h-14 w-14 rounded-full border-2 border-white/30"
                 />
                 <div>
                   <h3 className="font-semibold">{t.name}</h3>
                   <p className="text-white/70 text-sm">{t.role}</p>
                 </div>
               </div>
+
               <p className="text-white/80 text-sm italic">“{t.quote}”</p>
-              <div className="flex gap-1 mt-3 text-yellow-400">
-                {Array.from({ length: 5 }).map((_, j) => (
-                  <span key={j}>⭐</span>
-                ))}
-              </div>
+              <p className="text-yellow-400 mt-3">★★★★★</p>
             </div>
           ))}
         </Marquee>
-
-        <p className="text-center mt-6 text-white/60 text-sm">
-          (Hover to pause the scrolling)
-        </p>
       </section>
 
-      {/* Decorative backgrounds (unchanged) */}
-      <section className="relative mx-auto max-w-7xl px-4 text-white">
+      {/* -----------------------------------------------------
+        CONTACT SECTION
+      ------------------------------------------------------ */}
+      <section id="contact" className="max-w-6xl mx-auto px-6 md:px-12 lg:px-20 mt-32 text-white">
+        <h2 className="text-center text-4xl font-bold mb-14">
+          Get in <span className="text-skyup-teal">Touch</span>
+        </h2>
+
+        <div className="glass p-10 rounded-3xl grid grid-cols-1 lg:grid-cols-2 gap-10">
+          {/* Address */}
+          <div>
+            <h3 className="text-xl font-semibold mb-3">Our Address</h3>
+            <p>No. 331, Trincomalee, Sri Lanka</p>
+            <p className="mt-2"><strong>Phone:</strong> +94 760007822</p>
+            <p><strong>Email:</strong> skyup.official08@gmail.com</p>
+          </div>
+
+          {/* Contact Form */}
+          <form className="space-y-5">
+            <input placeholder="Name" className="input" />
+            <input placeholder="Email" className="input" />
+            <input placeholder="Subject" className="input" />
+            <textarea placeholder="Message" rows="4" className="input"></textarea>
+
+            <button className="btn btn-primary w-full">Send Message</button>
+          </form>
+        </div>
+      </section>
+
+      {/* -----------------------------------------------------
+        LOGIN + REGISTER CTA
+      ------------------------------------------------------ */}
+      <section className="max-w-5xl mx-auto px-6 md:px-12 lg:px-20 mt-32 text-white text-center">
+        <div className="glass p-12 rounded-3xl">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">
+            Join the <span className="text-skyup-teal">SkyUp Community</span>
+          </h2>
+          <p className="text-white/70 max-w-xl mx-auto mb-8">
+            Create your account or log in to access personalized tools, premium courses,
+            and your own learning dashboard.
+          </p>
+
+          <div className="flex gap-6 flex-wrap justify-center">
+            <a href="/login" className="btn btn-primary min-w-[150px]">Login</a>
+            <a href="/signup" className="btn btn-ghost min-w-[150px]">Register</a>
+          </div>
+        </div>
+      </section>
+
+      {/* Background Lottie Decorations */}
+      <div className="relative mt-24">
         <LottieBlob />
-        <div className="glass grid md:grid-cols-2 overflow-hidden relative z-10"></div>
-      </section>
-
-      <section className="relative mx-auto max-w-7xl px-4 text-white">
         <LottieLayeredBlobs />
-        <div className="relative z-10 glass grid md:grid-cols-2 overflow-hidden"></div>
-      </section>
+      </div>
+
+      {/* FOOTER */}
+      <footer className="mt-32 text-center text-white/70 py-6">
+        ©2025 SkyUp Campus — All Rights Reserved
+      </footer>
     </>
   );
 }
