@@ -123,10 +123,11 @@ export default function Home() {
           >
             <h1 className="text-5xl md:text-6xl font-extrabold leading-tight">
               Welcome to{" "}
-              <span className="bg-gradient-to-r from-skyup-purple to-skyup-teal bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#5CFFBD] to-[#3BA3FF] bg-clip-text text-transparent">
                 SkyUp Campus
               </span>
             </h1>
+
 
             <p className="mt-5 text-white/80 text-lg md:text-xl max-w-lg mx-auto lg:mx-0">
               Learn freelancing, design & development — Build your future with
