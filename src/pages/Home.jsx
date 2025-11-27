@@ -9,6 +9,7 @@ import floatingLaptop from "../assets/lottie-laptop.json";
 import floatingCode from "../assets/lottie-code.json";
 import Navbar from "../components/layout/Navbar";
 import "../index.css";  
+import EventsSection from "../components/EventsSection";
 import Hero from "../components/home/Hero";
 import Testimonials from "../components/home/Testimonials";
 import Footer from "../components/layout/Footer";
@@ -293,6 +294,20 @@ export default function Home() {
         </Marquee>
       </section>
 
+            {/* 🎉 NEW EVENTS SECTION — FULLY INTEGRATED */}
+      <EventsSection />
+
+      {/* Decorative Lottie blobs */}
+      <section className="relative mx-auto max-w-7xl px-4 text-white">
+        <LottieBlob />
+        <div className="glass grid md:grid-cols-2 overflow-hidden relative z-10"></div>
+      </section>
+
+      <section className="relative mx-auto max-w-7xl px-4 text-white">
+        <LottieLayeredBlobs />
+        <div className="relative z-10 glass grid md:grid-cols-2 overflow-hidden"></div>
+      </section>
+
             {/* -----------------------------------------------------
           CONTACT SECTION (FIXED)
       ------------------------------------------------------ */}
@@ -383,11 +398,6 @@ export default function Home() {
         <LottieBlob />
         <LottieLayeredBlobs />
       </div>
-
-      {/* FOOTER */}
-      <footer className="mt-32 text-center text-white/70 py-6">
-        ©2025 SkyUp Campus — All Rights Reserved
-      </footer>
     </>
   );
 }

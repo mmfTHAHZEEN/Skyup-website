@@ -12,8 +12,11 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Auth from "./pages/Auth";
 import Instructors from "./pages/Instructors.jsx";
+import EventsSection from "./components/EventsSection.jsx";
 
 export default function App() {
+  const location = useLocation();
+
   return (
     <>
       <GradientBG />
@@ -34,6 +37,7 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="/courses" element={<Courses />} />
             <Route path="/tools" element={<Tools />} />
+            <Route path="/events" element={<EventsSection />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/auth" element={<Auth />} />

@@ -35,10 +35,8 @@ export default function Navbar() {
             <NavItem to="/">Home</NavItem>
             <NavItem to="/courses">Courses</NavItem>
             <NavItem to="/tools">Tools</NavItem>
-
-            {/* ➕ ADD THIS */}
+            <NavItem to="/events">Events</NavItem>
             <NavItem to="/instructors">Instructors</NavItem>
-
             <NavItem to="/about">About</NavItem>
             <NavItem to="/contact">Contact</NavItem>
             <Link to="/auth" className="btn btn-primary">Login</Link>
@@ -56,10 +54,8 @@ export default function Navbar() {
             <NavItem to="/">Home</NavItem>
             <NavItem to="/courses">Courses</NavItem>
             <NavItem to="/tools">Tools</NavItem>
-
-            {/* ➕ ADD THIS */}
+            <NavItem to="/tools">Events</NavItem>
             <NavItem to="/instructors">Instructors</NavItem>
-
             <NavItem to="/about">About</NavItem>
             <NavItem to="/contact">Contact</NavItem>
             <Link to="/auth" className="btn btn-primary">Login</Link>
