@@ -3,7 +3,7 @@ import Marquee from "react-fast-marquee";
 import Lottie from "react-lottie-player";
 import LottieBlob from "../components/ui/LottieBlob";
 import LottieLayeredBlobs from "../components/ui/LottieLayeredBlobs";
-import studentImg from "../assets/student-laptop.png";
+import studentImg from "../assets/student.png";
 import floatingBook from "../assets/lottie-book.json";
 import floatingLaptop from "../assets/lottie-laptop.json";
 import floatingCode from "../assets/lottie-code.json";
@@ -370,26 +370,6 @@ export default function Home() {
             </button>
           </form>
 
-        </div>
-      </section>
-
-      {/* -----------------------------------------------------
-        LOGIN + REGISTER CTA
-      ------------------------------------------------------ */}
-      <section className="max-w-5xl mx-auto px-6 md:px-12 lg:px-20 mt-32 text-white text-center">
-        <div className="glass p-12 rounded-3xl">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            Join the <span className="text-skyup-teal">SkyUp Community</span>
-          </h2>
-          <p className="text-white/70 max-w-xl mx-auto mb-8">
-            Create your account or log in to access personalized tools, premium courses,
-            and your own learning dashboard.
-          </p>
-
-          <div className="flex gap-6 flex-wrap justify-center">
-            <a href="/login" className="btn btn-primary min-w-[150px]">Login</a>
-            <a href="/signup" className="btn btn-ghost min-w-[150px]">Register</a>
-          </div>
         </div>
       </section>
 

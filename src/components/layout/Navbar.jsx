@@ -1,6 +1,8 @@
 import { Link, NavLink } from "react-router-dom";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
+import logo from "../../assets/logo3.png";
+
 
 const NavItem = ({ to, children }) => (
   <NavLink
@@ -26,9 +28,15 @@ export default function Navbar() {
         <div className="glass flex items-center justify-between px-5 py-3">
           
           {/* Logo */}
-          <Link to="/" className="text-2xl font-bold text-white">
-            Sky<span className="text-skyup-teal">Up</span>
+          <Link to="/" className="flex items-center">
+            <img 
+              src={logo}
+              alt="SkyUp Logo"
+              className="h-12 w-auto object-contain drop-shadow-md"
+              style={{ marginTop: "-4px" }}
+            />
           </Link>
+
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-4">

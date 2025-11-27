@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import authImage from "../assets/student-laptop.png"; // Update image path if needed
+import authImage from "../assets/laptop.png"; // Update image path if needed
 
 export default function Login() {
   return (
