@@ -13,6 +13,7 @@ import Contact from "./pages/Contact";
 import Auth from "./pages/Auth";
 import Instructors from "./pages/Instructors.jsx";
 import EventsSection from "./components/EventsSection.jsx";
+import Dashboard from "./pages/Dashboard";
 
 export default function App() {
   const location = useLocation();
@@ -42,6 +43,7 @@ export default function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/instructors" element={<Instructors />} />
+            <Route path="/dashboard" element={<Dashboard />} />
           </Routes>
         </motion.main>
       </AnimatePresence>
