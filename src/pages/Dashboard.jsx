@@ -10,6 +10,7 @@ import {
 } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { tools as toolsData } from "../data/tools";
 
 /* ---------- Progress Ring Component ---------- */
 function ProgressRing({ progress }) {
@@ -59,23 +60,24 @@ function ProgressRing({ progress }) {
 /* ---------- Dashboard ---------- */
 export default function Dashboard() {
     const [myCourses, setMyCourses] = useState([]);
+    const [myTools, setMyTools] = useState([]);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(async (user) => {
             if (!user) {
-                setMyCourses([]);
                 setLoading(false);
                 return;
             }
 
-            const q = query(
+            /* ---------- COURSES ---------- */
+            const courseQ = query(
                 collection(db, "enrollments"),
                 where("userId", "==", user.uid)
             );
 
-            const enrollSnap = await getDocs(q);
+            const enrollSnap = await getDocs(courseQ);
             const coursesData = [];
 
             for (const docSnap of enrollSnap.docs) {
@@ -92,15 +94,35 @@ export default function Dashboard() {
                 }
             }
 
+            /* ---------- TOOLS ---------- */
+            const toolQ = query(
+                collection(db, "toolEnrollments"),
+                where("userId", "==", user.uid)
+            );
+
+            const toolSnap = await getDocs(toolQ);
+
+            const toolsDataResolved = toolSnap.docs
+                .map(d =>
+                    toolsData.find(t => t.id === d.data().toolId)
+                )
+                .filter(Boolean);
+
             setMyCourses(coursesData);
+            setMyTools(toolsDataResolved);
             setLoading(false);
         });
 
         return () => unsubscribe();
     }, []);
 
-
-
+    if (loading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center text-white">
+                Loading your dashboard...
+            </div>
+        );
+    }
 
     return (
         <section className="min-h-screen px-6 py-16 text-white">
@@ -120,17 +142,17 @@ export default function Dashboard() {
                     </p>
                 </motion.div>
 
-                {/* EMPTY STATE */}
+                {/* ================= COURSES ================= */}
                 {myCourses.length === 0 ? (
                     <motion.div
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        className="glass rounded-3xl p-14 text-center max-w-3xl mx-auto"
+                        className="glass rounded-3xl p-14 text-center max-w-3xl mx-auto mb-24"
                     >
                         <h2 className="text-2xl md:text-3xl font-semibold mb-4">
                             Your learning journey starts here 🚀
                         </h2>
-                        <p className="text-white/70 mb-8 max-w-xl mx-auto">
+                        <p className="text-white/70 mb-8">
                             Enroll in expert-led courses and start building real-world skills today.
                         </p>
                         <button
@@ -141,40 +163,28 @@ export default function Dashboard() {
                         </button>
                     </motion.div>
                 ) : (
-
-                    /* COURSE GRID */
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mb-24">
                         {myCourses.map((course, index) => (
                             <motion.div
                                 key={course.id}
                                 initial={{ opacity: 0, y: 25 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: index * 0.08 }}
-                                className="glass rounded-3xl overflow-hidden hover:scale-[1.02] transition-all duration-300"
+                                className="glass rounded-3xl overflow-hidden hover:scale-[1.02] transition"
                             >
-                                {/* IMAGE + PROGRESS RING */}
                                 <div className="relative h-48">
                                     <img
                                         src={course.thumbnail}
                                         alt={course.title}
                                         className="w-full h-full object-cover"
                                     />
-
-                                    <div className="absolute top-4 right-4 backdrop-blur-md bg-black/40 rounded-full p-2">
+                                    <div className="absolute top-4 right-4 bg-black/40 rounded-full p-2">
                                         <ProgressRing progress={course.progress} />
                                     </div>
                                 </div>
 
-                                {/* CONTENT */}
                                 <div className="p-6">
-                                    <h3 className="text-xl font-semibold">
-                                        {course.title}
-                                    </h3>
-
-                                    <p className="text-white/65 text-sm mt-2 line-clamp-2">
-                                        {course.description}
-                                    </p>
-
+                                    <h3 className="text-xl font-semibold">{course.title}</h3>
                                     <button
                                         onClick={() => navigate(`/courses/${course.id}`)}
                                         className="btn btn-primary w-full mt-6"
@@ -186,6 +196,58 @@ export default function Dashboard() {
                         ))}
                     </div>
                 )}
+
+                {/* ================= TOOLS ================= */}
+                <h2 className="text-3xl font-bold mb-8">
+                    My <span className="text-skyup-teal">Tools</span>
+                </h2>
+
+                {myTools.length === 0 ? (
+                    <div className="glass rounded-3xl p-10 text-center max-w-xl">
+                        <p className="text-white/70 mb-6">
+                            You haven’t accessed any tools yet.
+                        </p>
+                        <button
+                            onClick={() => navigate("/tools")}
+                            className="btn btn-primary px-8 py-3"
+                        >
+                            Explore Tools
+                        </button>
+                    </div>
+                ) : (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+                        {myTools.map((tool, index) => (
+                            <motion.div
+                                key={tool.id}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: index * 0.08 }}
+                                className="glass rounded-3xl overflow-hidden"
+                            >
+                                <img
+                                    src={tool.image}
+                                    alt={tool.title}
+                                    className="h-40 w-full object-cover"
+                                />
+
+                                <div className="p-6">
+                                    <h3 className="text-xl font-semibold">{tool.title}</h3>
+                                    <p className="text-white/60 text-sm mt-1">
+                                        Access Active
+                                    </p>
+
+                                    <button
+                                        onClick={() => navigate(`/tools/${tool.id}`)}
+                                        className="btn btn-primary w-full mt-6"
+                                    >
+                                        Open Tool
+                                    </button>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+                )}
+
             </div>
         </section>
     );
