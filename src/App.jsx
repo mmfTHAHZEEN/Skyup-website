@@ -16,6 +16,8 @@ import EventsSection from "./components/EventsSection.jsx";
 import Dashboard from "./pages/Dashboard";
 import RequireAuth from "./pages/RequireAuth";
 import CourseDetails from "./pages/CourseDetails";
+import ProtectedRoute from "./components/ProtectedRoute";
+import ToolDetails from "./pages/ToolDetails";
 
 export default function App() {
   const location = useLocation();
@@ -47,9 +49,20 @@ export default function App() {
             <Route path="/instructors" element={<Instructors />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/courses/:courseId" element={<CourseDetails />} />
+            <Route path="/tools/:toolId" element={<ToolDetails />} />
+
             {/* Public */}
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Auth />} />
+
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            />
 
             {/* Protected */}
             <Route

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import authImage from "../assets/student-laptop.png";
-import { auth, googleProvider, sendSMS, setupRecaptcha } from "../firebase";
 
 import { auth, googleProvider, sendSMS, setupRecaptcha } from "../firebase";
 import {

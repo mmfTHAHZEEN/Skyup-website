@@ -6,6 +6,7 @@ import {
   RecaptchaVerifier,
   signInWithPhoneNumber,
 } from "firebase/auth";
+import { getFirestore } from "firebase/firestore"; // 🔥 ADD THIS
 
 // Your actual Firebase config
 const firebaseConfig = {
@@ -23,6 +24,9 @@ const app = initializeApp(firebaseConfig);
 
 // Auth instance
 export const auth = getAuth(app);
+
+// 🔥 Firestore Database (THIS FIXES YOUR ERROR)
+export const db = getFirestore(app);
 
 // Google Auth Provider
 export const googleProvider = new GoogleAuthProvider();
