@@ -1,36 +1,45 @@
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 /* -------------------- Course Data -------------------- */
 const courses = [
   {
+    id: "it-statistics",
     title: "IT Statistics & Data Science",
     img: "https://images.unsplash.com/photo-1581090700227-1e37b190418e?q=80&w=1200",
   },
   {
+    id: "illustrator",
     title: "Adobe Illustrator for Graphic Design",
     img: "https://images.unsplash.com/photo-1587614382346-4ec65b7d3a9f?q=80&w=1200",
   },
   {
+    id: "seo",
     title: "SEO for Your Home-Based Business",
     img: "https://images.unsplash.com/photo-1581093458791-9b6c9737e9d7?q=80&w=1200",
   },
   {
+    id: "freelancing",
     title: "Advanced Freelancing Strategies",
     img: "https://images.unsplash.com/photo-1581092334651-3c7d1f2d6b67?q=80&w=1200",
   },
   {
+    id: "fiverr-upwork",
     title: "Fiverr & Upwork Profile Building",
     img: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=1200",
   },
   {
+    id: "graphic-design",
     title: "Graphic Design Fundamentals",
     img: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1200",
   },
 ];
 
+
 /* -------------------- Courses Page -------------------- */
 
 export default function Courses() {
+  const navigate = useNavigate();
   return (
     <section className="mx-auto max-w-7xl px-6 md:px-12 lg:px-20 py-20 text-white">
       {/* Page Heading */}
@@ -72,10 +81,10 @@ export default function Courses() {
               <p className="text-white/70 text-sm mt-3 leading-relaxed">
                 Learn from industry professionals and build real-world skills.
               </p>
-
               <button
                 className="btn btn-primary mt-6 w-full shadow-lg hover:shadow-skyup-teal/30"
                 type="button"
+                onClick={() => navigate(`/courses/${course.id}`)}
               >
                 Enroll Now
               </button>

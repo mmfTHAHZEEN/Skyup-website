@@ -8,10 +8,9 @@ const NavItem = ({ to, children }) => (
   <NavLink
     to={to}
     className={({ isActive }) =>
-      `px-3 py-2 rounded-md transition ${
-        isActive
-          ? "bg-white/20 text-white"
-          : "text-white/80 hover:text-white hover:bg-white/10"
+      `px-3 py-2 rounded-md transition ${isActive
+        ? "bg-white/20 text-white"
+        : "text-white/80 hover:text-white hover:bg-white/10"
       }`
     }
   >
@@ -26,10 +25,10 @@ export default function Navbar() {
     <header className="fixed inset-x-0 top-0 z-50">
       <nav className="mx-auto max-w-7xl px-4 py-4">
         <div className="glass flex items-center justify-between px-5 py-3">
-          
+
           {/* Logo */}
           <Link to="/" className="flex items-center">
-            <img 
+            <img
               src={logo}
               alt="SkyUp Logo"
               className="h-12 w-auto object-contain drop-shadow-md"

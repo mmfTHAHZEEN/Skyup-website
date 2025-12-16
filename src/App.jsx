@@ -14,6 +14,8 @@ import Auth from "./pages/Auth";
 import Instructors from "./pages/Instructors.jsx";
 import EventsSection from "./components/EventsSection.jsx";
 import Dashboard from "./pages/Dashboard";
+import RequireAuth from "./pages/RequireAuth";
+import CourseDetails from "./pages/CourseDetails";
 
 export default function App() {
   const location = useLocation();
@@ -44,6 +46,47 @@ export default function App() {
             <Route path="/auth" element={<Auth />} />
             <Route path="/instructors" element={<Instructors />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/courses/:courseId" element={<CourseDetails />} />
+            {/* Public */}
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Auth />} />
+
+            {/* Protected */}
+            <Route
+              path="/dashboard"
+              element={
+                <RequireAuth>
+                  <Dashboard />
+                </RequireAuth>
+              }
+            />
+
+            <Route
+              path="/courses"
+              element={
+                <RequireAuth>
+                  <Courses />
+                </RequireAuth>
+              }
+            />
+
+            <Route
+              path="/tools"
+              element={
+                <RequireAuth>
+                  <Tools />
+                </RequireAuth>
+              }
+            />
+
+            <Route
+              path="/instructors"
+              element={
+                <RequireAuth>
+                  <Instructors />
+                </RequireAuth>
+              }
+            />
           </Routes>
         </motion.main>
       </AnimatePresence>
