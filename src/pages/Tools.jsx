@@ -3,16 +3,25 @@ import { tools } from "../data/tools";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../firebase";
 import { enrollTool } from "../services/toolEnrollment";
+import { useEffect, useState } from "react";
 
 export default function Tools() {
   const navigate = useNavigate();
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const unsub = auth.onAuthStateChanged((user) => {
+      setLoggedIn(!!user);
+    });
+    return () => unsub();
+  }, []);
 
   const handleViewDetails = async (toolId) => {
     const user = auth.currentUser;
 
     // ❌ Not logged in
     if (!user) {
-      navigate("/signup");
+      navigate("/signup"); // change to /auth if you use /auth
       return;
     }
 
@@ -30,33 +39,75 @@ export default function Tools() {
       </h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-        {tools.map((tool, i) => (
-          <motion.div
-            key={tool.id}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.1 }}
-            className="glass rounded-3xl overflow-hidden hover:scale-[1.03] transition"
-          >
-            <img
-              src={tool.image}
-              alt={tool.title}
-              className="h-48 w-full object-cover"
-            />
+        {tools.map((tool, i) => {
+          const locked = !loggedIn;
 
-            <div className="p-6">
-              <h3 className="text-xl font-semibold">{tool.title}</h3>
-              <p className="text-white/70 text-sm mt-2">{tool.desc}</p>
+          return (
+            <motion.div
+              key={tool.id}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.1 }}
+              viewport={{ once: true }}
+              className="glass rounded-3xl overflow-hidden"
+            >
+              {/* IMAGE (blur if locked) */}
+              <div className="relative h-48 w-full overflow-hidden">
+                <img
+                  src={tool.image}
+                  alt={tool.title}
+                  className="h-48 w-full object-cover"
+                  style={{
+                    filter: locked ? "blur(10px)" : "none",
+                    transform: locked ? "scale(1.08)" : "scale(1)",
+                    transition: "all 0.3s ease",
+                  }}
+                />
 
-              <button
-                onClick={() => handleViewDetails(tool.id)}
-                className="btn btn-primary w-full mt-6"
-              >
-                View Details
-              </button>
-            </div>
-          </motion.div>
-        ))}
+                {/* Overlay */}
+                {locked && (
+                  <div
+                    className="absolute inset-0 flex items-center justify-center"
+                    style={{ backgroundColor: "rgba(0,0,0,0.45)" }}
+                  >
+                    <span className="text-sm px-4 py-2 rounded-full border border-white/30 bg-black/50">
+                      Login to unlock
+                    </span>
+                  </div>
+                )}
+              </div>
+
+              <div className="p-6">
+                {/* Always show title */}
+                <h3 className="text-xl font-semibold">{tool.title}</h3>
+
+                {/* Only show details after login */}
+                {!locked && (
+                  <>
+                    <p className="text-white/70 text-sm mt-2">{tool.desc}</p>
+
+                    <button
+                      onClick={() => handleViewDetails(tool.id)}
+                      className="btn btn-primary w-full mt-6"
+                    >
+                      View Details
+                    </button>
+                  </>
+                )}
+
+                {/* Optional: locked button */}
+                {locked && (
+                  <button
+                    onClick={() => navigate("/signup")} // change to /auth if needed
+                    className="w-full mt-6 py-3 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 transition"
+                  >
+                    Login to Access
+                  </button>
+                )}
+              </div>
+            </motion.div>
+          );
+        })}
       </div>
     </section>
   );
