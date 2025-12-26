@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { auth, db } from "../firebase";
 import {
     collection,
@@ -18,8 +18,7 @@ function ProgressRing({ progress }) {
     const stroke = 5;
     const normalizedRadius = radius - stroke * 2;
     const circumference = normalizedRadius * 2 * Math.PI;
-    const strokeDashoffset =
-        circumference - (progress / 100) * circumference;
+    const strokeDashoffset = circumference - (progress / 100) * circumference;
 
     return (
         <svg height={radius * 2} width={radius * 2}>
@@ -62,13 +61,48 @@ export default function Dashboard() {
     const [myCourses, setMyCourses] = useState([]);
     const [myTools, setMyTools] = useState([]);
     const [loading, setLoading] = useState(true);
+
+    // Greeting + avatar
+    const [displayName, setDisplayName] = useState("Thahzeen");
+    const [photoURL, setPhotoURL] = useState("");
+
     const navigate = useNavigate();
+
+    const greeting = useMemo(() => {
+        const h = new Date().getHours();
+        if (h < 12) return "Good morning";
+        if (h < 17) return "Good afternoon";
+        return "Good evening";
+    }, []);
+
+    // Default avatar (used if user has no photoURL)
+    const fallbackAvatar =
+        "https://api.dicebear.com/9.x/bottts-neutral/png?seed=SkyUp&size=96";
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(async (user) => {
             if (!user) {
                 setLoading(false);
                 return;
+            }
+
+            // Name + avatar from Auth first
+            setDisplayName(user.displayName || user.email?.split("@")[0] || "Thahzeen");
+            setPhotoURL(user.photoURL || "");
+
+            // OPTIONAL: if you have users/{uid} doc for profile
+            try {
+                const userRef = doc(db, "users", user.uid);
+                const userSnap = await getDoc(userRef);
+                if (userSnap.exists()) {
+                    const u = userSnap.data();
+                    setDisplayName(
+                        u.fullName || u.name || user.displayName || "Thahzeen"
+                    );
+                    setPhotoURL(u.avatarUrl || u.photoURL || user.photoURL || "");
+                }
+            } catch (e) {
+                // ignore if "users" collection not used
             }
 
             /* ---------- COURSES ---------- */
@@ -103,9 +137,7 @@ export default function Dashboard() {
             const toolSnap = await getDocs(toolQ);
 
             const toolsDataResolved = toolSnap.docs
-                .map(d =>
-                    toolsData.find(t => t.id === d.data().toolId)
-                )
+                .map((d) => toolsData.find((t) => t.id === d.data().toolId))
                 .filter(Boolean);
 
             setMyCourses(coursesData);
@@ -128,15 +160,43 @@ export default function Dashboard() {
         <section className="min-h-screen px-6 py-16 text-white">
             <div className="max-w-6xl mx-auto">
 
+                {/* ✅ SIMPLE GREETING (NO GLASS BOX, NO BUTTONS) */}
+                <motion.div
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="mb-10 flex items-center gap-4"
+                >
+                    <img
+                        src={photoURL || fallbackAvatar}
+                        alt={displayName}
+                        className="w-12 h-12 rounded-full object-cover border border-white/20"
+                        referrerPolicy="no-referrer"
+                    />
+
+                    <div>
+                        <p className="text-white/60 text-sm">
+                            {greeting} 👋
+                        </p>
+
+                        <h1 className="text-2xl md:text-3xl font-bold leading-tight">
+                            Welcome, <span className="text-skyup-teal">{displayName}</span>!
+                        </h1>
+
+                        <p className="text-white/60 text-sm mt-1">
+                            Let’s continue where you left off.
+                        </p>
+                    </div>
+                </motion.div>
+
                 {/* HEADER */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     className="mb-12"
                 >
-                    <h1 className="text-4xl md:text-5xl font-bold">
+                    <h2 className="text-4xl md:text-5xl font-bold">
                         My <span className="text-skyup-teal">Learning</span>
-                    </h1>
+                    </h2>
                     <p className="text-white/60 mt-3 max-w-xl">
                         Track your progress and continue learning at your own pace.
                     </p>
@@ -232,9 +292,7 @@ export default function Dashboard() {
 
                                 <div className="p-6">
                                     <h3 className="text-xl font-semibold">{tool.title}</h3>
-                                    <p className="text-white/60 text-sm mt-1">
-                                        Access Active
-                                    </p>
+                                    <p className="text-white/60 text-sm mt-1">Access Active</p>
 
                                     <button
                                         onClick={() => navigate(`/tools/${tool.id}`)}
@@ -247,7 +305,6 @@ export default function Dashboard() {
                         ))}
                     </div>
                 )}
-
             </div>
         </section>
     );
