@@ -3,18 +3,41 @@ import { tools } from "../data/tools";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../firebase";
 import { enrollTool } from "../services/toolEnrollment";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export default function Tools() {
   const navigate = useNavigate();
   const [loggedIn, setLoggedIn] = useState(false);
 
+  // Mobile "read more"
+  const MOBILE_VISIBLE_COUNT = 4;
+  const [showAllMobile, setShowAllMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
   useEffect(() => {
-    const unsub = auth.onAuthStateChanged((user) => {
-      setLoggedIn(!!user);
-    });
+    const unsub = auth.onAuthStateChanged((user) => setLoggedIn(!!user));
     return () => unsub();
   }, []);
+
+  // Detect mobile (< 640px which is Tailwind "sm")
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 639px)");
+    const update = () => setIsMobile(mq.matches);
+
+    update();
+    mq.addEventListener?.("change", update);
+    return () => mq.removeEventListener?.("change", update);
+  }, []);
+
+  // Reset read-more state when leaving mobile
+  useEffect(() => {
+    if (!isMobile) setShowAllMobile(false);
+  }, [isMobile]);
+
+  const visibleTools = useMemo(() => {
+    if (!isMobile) return tools;
+    return showAllMobile ? tools : tools.slice(0, MOBILE_VISIBLE_COUNT);
+  }, [isMobile, showAllMobile]);
 
   const handleViewDetails = async (toolId) => {
     const user = auth.currentUser;
@@ -39,7 +62,7 @@ export default function Tools() {
       </h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-        {tools.map((tool, i) => {
+        {visibleTools.map((tool, i) => {
           const locked = !loggedIn;
 
           return (
@@ -109,6 +132,18 @@ export default function Tools() {
           );
         })}
       </div>
+
+      {/* Mobile Read More / Show Less */}
+      {isMobile && tools.length > MOBILE_VISIBLE_COUNT && (
+        <div className="mt-10 flex justify-center">
+          <button
+            onClick={() => setShowAllMobile((v) => !v)}
+            className="px-6 py-3 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 transition"
+          >
+            {showAllMobile ? "Show Less" : "Read More"}
+          </button>
+        </div>
+      )}
     </section>
   );
 }

@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { auth } from "../firebase";
 
 /* -------------------- Course Data -------------------- */
@@ -42,12 +42,35 @@ export default function Courses() {
   const navigate = useNavigate();
   const [loggedIn, setLoggedIn] = useState(false);
 
+  // Mobile "read more"
+  const MOBILE_VISIBLE_COUNT = 4;
+  const [showAllMobile, setShowAllMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
   useEffect(() => {
-    const unsub = auth.onAuthStateChanged((user) => {
-      setLoggedIn(!!user);
-    });
+    const unsub = auth.onAuthStateChanged((user) => setLoggedIn(!!user));
     return () => unsub();
   }, []);
+
+  // Detect mobile (< 640px which is Tailwind "sm")
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 639px)");
+    const update = () => setIsMobile(mq.matches);
+
+    update();
+    mq.addEventListener?.("change", update);
+    return () => mq.removeEventListener?.("change", update);
+  }, []);
+
+  // Reset read-more state when leaving mobile
+  useEffect(() => {
+    if (!isMobile) setShowAllMobile(false);
+  }, [isMobile]);
+
+  const visibleCourses = useMemo(() => {
+    if (!isMobile) return courses;
+    return showAllMobile ? courses : courses.slice(0, MOBILE_VISIBLE_COUNT);
+  }, [isMobile, showAllMobile]);
 
   return (
     <section className="mx-auto max-w-7xl px-6 md:px-12 lg:px-20 py-20 text-white">
@@ -62,7 +85,7 @@ export default function Courses() {
 
       {/* Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-        {courses.map((course, i) => {
+        {visibleCourses.map((course, i) => {
           const locked = !loggedIn;
 
           return (
@@ -91,9 +114,7 @@ export default function Courses() {
                 {locked && (
                   <div
                     className="absolute inset-0 flex items-center justify-center"
-                    style={{
-                      backgroundColor: "rgba(0,0,0,0.45)",
-                    }}
+                    style={{ backgroundColor: "rgba(0,0,0,0.45)" }}
                   >
                     <span className="text-sm px-4 py-2 rounded-full border border-white/30 bg-black/50">
                       Login to unlock
@@ -113,7 +134,8 @@ export default function Courses() {
                 {!locked && (
                   <>
                     <p className="text-white/70 text-sm mt-3">
-                      Learn from industry professionals and build real-world skills.
+                      Learn from industry professionals and build real-world
+                      skills.
                     </p>
 
                     <button
@@ -129,6 +151,18 @@ export default function Courses() {
           );
         })}
       </div>
+
+      {/* Mobile Read More / Show Less */}
+      {isMobile && courses.length > MOBILE_VISIBLE_COUNT && (
+        <div className="mt-10 flex justify-center">
+          <button
+            onClick={() => setShowAllMobile((v) => !v)}
+            className="px-6 py-3 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 transition"
+          >
+            {showAllMobile ? "Show Less" : "Read More"}
+          </button>
+        </div>
+      )}
     </section>
   );
 }
