@@ -8,12 +8,15 @@ import floatingBook from "../assets/lottie-book.json";
 import floatingLaptop from "../assets/lottie-laptop.json";
 import floatingCode from "../assets/lottie-code.json";
 import Navbar from "../components/layout/Navbar";
-import "../index.css";  
+import "../index.css";
 import EventsSection from "../components/EventsSection";
 import Hero from "../components/home/Hero";
 import Testimonials from "../components/home/Testimonials";
 import Footer from "../components/layout/Footer";
 import Instructors from "./Instructors";
+import { useNavigate } from "react-router-dom";
+import { auth } from "../firebase";
+
 /* --------------------------------------------------
    TESTIMONIAL DATA
 -------------------------------------------------- */
@@ -98,6 +101,17 @@ const tools = [
 -------------------------------------------------- */
 
 export default function Home() {
+  const navigate = useNavigate();
+
+  const handleGetStarted = () => {
+    const user = auth.currentUser;
+    if (!user) navigate("/auth");       // login page
+    else navigate("/dashboard");        // dashboard if logged in
+  };
+
+  const handleGoCourses = () => navigate("/courses");
+  const handleGoTools = () => navigate("/tools");
+
   return (
     <>
       <Navbar />
@@ -135,9 +149,15 @@ export default function Home() {
               expert-led courses and real-world projects.
             </p>
 
+
             <div className="mt-8 flex flex-wrap gap-4 justify-center lg:justify-start">
-              <a href="/signup" className="btn btn-primary">Get Started</a>
-              <a href="/tools" className="btn btn-ghost">Explore Tools</a>
+              <button onClick={handleGetStarted} className="btn btn-primary">
+                Get Started
+              </button>
+
+              <button onClick={handleGoTools} className="btn btn-ghost">
+                Explore Tools
+              </button>
             </div>
           </motion.div>
 
@@ -294,7 +314,7 @@ export default function Home() {
         </Marquee>
       </section>
 
-            {/* 🎉 NEW EVENTS SECTION — FULLY INTEGRATED */}
+      {/* 🎉 NEW EVENTS SECTION — FULLY INTEGRATED */}
       <EventsSection />
 
       {/* Decorative Lottie blobs */}
@@ -308,7 +328,7 @@ export default function Home() {
         <div className="relative z-10 glass grid md:grid-cols-2 overflow-hidden"></div>
       </section>
 
-            {/* -----------------------------------------------------
+      {/* -----------------------------------------------------
           CONTACT SECTION (FIXED)
       ------------------------------------------------------ */}
       <section id="contact" className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 mt-32 text-white">
