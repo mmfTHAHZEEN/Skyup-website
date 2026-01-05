@@ -1,4 +1,6 @@
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import { auth } from "../firebase";
 import Marquee from "react-fast-marquee";
 import Lottie from "react-lottie-player";
 import LottieBlob from "../components/ui/LottieBlob";
@@ -14,8 +16,7 @@ import Hero from "../components/home/Hero";
 import Testimonials from "../components/home/Testimonials";
 import Footer from "../components/layout/Footer";
 import Instructors from "./Instructors";
-import { useNavigate } from "react-router-dom";
-import { auth } from "../firebase";
+
 
 /* --------------------------------------------------
    TESTIMONIAL DATA
@@ -109,9 +110,8 @@ export default function Home() {
     else navigate("/dashboard");        // dashboard if logged in
   };
 
-  const handleGoCourseClick = () => navigate("/courses");
-  const handleGoTools = () => navigate("/tools");
-
+  const handleGoTools = () => navigate("/tools");     // ✅ ADD THIS
+  const handleGoCourses = () => navigate("/courses");
   return (
     <>
       <Navbar />
@@ -227,9 +227,12 @@ export default function Home() {
       </section>
 
       {/* -----------------------------------------------------
-        COURSES SECTION
-      ------------------------------------------------------ */}
-      <section id="courses" className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 mt-32 text-white">
+  COURSES SECTION
+------------------------------------------------------ */}
+      <section
+        id="courses"
+        className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 mt-32 text-white"
+      >
         <h2 className="text-center text-4xl font-bold mb-12">
           Our <span className="text-skyup-teal">Courses</span>
         </h2>
@@ -244,16 +247,22 @@ export default function Home() {
               viewport={{ once: true }}
               className="glass rounded-3xl overflow-hidden hover:scale-[1.02] transition-all backdrop-blur-md"
             >
-              <img src={c.img} alt={c.title} className="h-52 w-full object-cover" />
+              <img
+                src={c.img}
+                alt={c.title}
+                className="h-52 w-full object-cover"
+              />
+
               <div className="p-6">
                 <h3 className="font-semibold text-xl">{c.title}</h3>
+
                 <p className="text-sm text-white/70 mt-2">
                   Learn from industry professionals and build real-world skills.
                 </p>
+
                 <button
                   className="btn btn-primary mt-4 w-full"
-                  onClick={handleCourseClick}
-                >
+                  onClick={() => navigate("/courses")}                >
                   Enroll Now
                 </button>
               </div>
@@ -261,6 +270,7 @@ export default function Home() {
           ))}
         </div>
       </section>
+
 
       {/* -----------------------------------------------------
         TOOLS SECTION
