@@ -109,7 +109,7 @@ export default function Home() {
     else navigate("/dashboard");        // dashboard if logged in
   };
 
-  const handleGoCourses = () => navigate("/courses");
+  const handleGoCourseClick = () => navigate("/courses");
   const handleGoTools = () => navigate("/tools");
 
   return (
@@ -250,7 +250,12 @@ export default function Home() {
                 <p className="text-sm text-white/70 mt-2">
                   Learn from industry professionals and build real-world skills.
                 </p>
-                <button className="btn btn-primary mt-4 w-full">Enroll Now</button>
+                <button
+                  className="btn btn-primary mt-4 w-full"
+                  onClick={handleCourseClick}
+                >
+                  Enroll Now
+                </button>
               </div>
             </motion.div>
           ))}
