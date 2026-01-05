@@ -86,16 +86,20 @@ const courses = [
    TOOLS DATA
 -------------------------------------------------- */
 const tools = [
-  "Canva Pro",
-  "WordPress Premium",
-  "ChatGPT Pro",
-  "Free Software Library",
-  "Fiverr Freelance Tools",
-  "SEO Keyword Kit",
-  "Adobe Illustrator",
-  "UI/UX Templates",
-  "AI Tools",
+  {
+    title: "Canva Pro",
+    img: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=1200",
+  },
+  {
+    title: "ChatGPT Pro",
+    img: "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1200",
+  },
+  {
+    title: "Figma",
+    img: "https://images.unsplash.com/photo-1559028012-481c04fa702d?q=80&w=1200",
+  },
 ];
+
 
 /* --------------------------------------------------
    HOME PAGE
@@ -295,13 +299,27 @@ export default function Home() {
               role="button"
               tabIndex={0}
               onKeyDown={(e) => e.key === "Enter" && navigate("/tools")}
-              className="glass rounded-2xl p-6 text-center hover:scale-105 transition-all cursor-pointer"
+              className="glass rounded-2xl overflow-hidden hover:scale-105 transition-all cursor-pointer"
             >
-              <h3 className="text-lg font-semibold">{tool}</h3>
+              {/* Image */}
+              <img
+                src={tool.img}
+                alt={tool.title}
+                className="h-40 w-full object-cover"
+              />
+
+              {/* Content */}
+              <div className="p-6 text-center">
+                <h3 className="text-lg font-semibold">{tool.title}</h3>
+                <p className="text-sm text-white/70 mt-2">
+                  Click to explore this tool
+                </p>
+              </div>
             </motion.div>
           ))}
         </div>
       </section>
+
 
 
       {/* -----------------------------------------------------
