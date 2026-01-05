@@ -273,9 +273,12 @@ export default function Home() {
 
 
       {/* -----------------------------------------------------
-        TOOLS SECTION
-      ------------------------------------------------------ */}
-      <section id="tools" className="max-w-6xl mx-auto px-6 md:px-12 lg:px-20 mt-32 text-white">
+  TOOLS SECTION
+------------------------------------------------------ */}
+      <section
+        id="tools"
+        className="max-w-6xl mx-auto px-6 md:px-12 lg:px-20 mt-32 text-white"
+      >
         <h2 className="text-center text-4xl font-bold mb-12">
           SkyUp <span className="text-skyup-teal">Tools</span>
         </h2>
@@ -288,13 +291,18 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: i * 0.05 }}
               viewport={{ once: true }}
-              className="glass rounded-2xl p-6 text-center hover:scale-105 transition-all"
+              onClick={() => navigate("/tools")}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => e.key === "Enter" && navigate("/tools")}
+              className="glass rounded-2xl p-6 text-center hover:scale-105 transition-all cursor-pointer"
             >
               <h3 className="text-lg font-semibold">{tool}</h3>
             </motion.div>
           ))}
         </div>
       </section>
+
 
       {/* -----------------------------------------------------
         TESTIMONIALS SECTION
