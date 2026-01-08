@@ -42,7 +42,7 @@ export default function Tools() {
   const handleViewDetails = async (toolId) => {
     const user = auth.currentUser;
 
-    // ❌ Not logged in
+    // ❌ Not logged in tool page
     if (!user) {
       navigate("/signup"); // change to /auth if you use /auth
       return;
