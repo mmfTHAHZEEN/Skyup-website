@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react"; // ✅ ADDED
 import { auth } from "../firebase";
 import Marquee from "react-fast-marquee";
 import Lottie from "react-lottie-player";
@@ -16,7 +17,6 @@ import Hero from "../components/home/Hero";
 import Testimonials from "../components/home/Testimonials";
 import Footer from "../components/layout/Footer";
 import Instructors from "./Instructors";
-
 
 /* --------------------------------------------------
    TESTIMONIAL DATA
@@ -53,69 +53,96 @@ const testimonials = [
 ];
 
 /* --------------------------------------------------
-   COURSE DATA
+   COURSE DATA (✅ ADDED ids)
 -------------------------------------------------- */
 const courses = [
   {
+    id: "it-statistics",
     title: "IT Statistics & Data Science",
     img: "https://images.unsplash.com/photo-1581090700227-1e37b190418e?q=80&w=1200",
   },
   {
+    id: "illustrator",
     title: "Adobe Illustrator for Graphic Design",
     img: "https://images.unsplash.com/photo-1587614382346-4ec65b7d3a9f?q=80&w=1200",
   },
   {
+    id: "seo",
     title: "SEO for Your Home-Based Business",
     img: "https://images.unsplash.com/photo-1581093458791-9b6c9737e9d7?q=80&w=1200",
   },
   {
+    id: "freelancing",
     title: "Advanced Freelancing Strategies",
     img: "https://images.unsplash.com/photo-1581092334651-3c7d1f2d6b67?q=80&w=1200",
   },
   {
+    id: "fiverr-upwork",
     title: "Fiverr & Upwork Profile Building",
     img: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=1200",
   },
   {
+    id: "graphic-design",
     title: "Graphic Design Fundamentals",
     img: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1200",
   },
 ];
 
 /* --------------------------------------------------
-   TOOLS DATA
+   TOOLS DATA (✅ ADDED ids)
 -------------------------------------------------- */
 const tools = [
   {
+    id: "canva-pro",
     title: "Canva Pro",
     img: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=1200",
   },
   {
+    id: "chatgpt-pro",
     title: "ChatGPT Pro",
     img: "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1200",
   },
   {
+    id: "figma",
     title: "Figma",
     img: "https://images.unsplash.com/photo-1559028012-481c04fa702d?q=80&w=1200",
   },
 ];
 
-
 /* --------------------------------------------------
    HOME PAGE
 -------------------------------------------------- */
-
 export default function Home() {
   const navigate = useNavigate();
 
+  // ✅ ADDED: loggedIn state for HOME-only access logic
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const unsub = auth.onAuthStateChanged((user) => setLoggedIn(!!user));
+    return () => unsub();
+  }, []);
+
   const handleGetStarted = () => {
     const user = auth.currentUser;
-    if (!user) navigate("/auth");       // login page
-    else navigate("/dashboard");        // dashboard if logged in
+    if (!user) navigate("/auth"); // login page
+    else navigate("/dashboard"); // dashboard if logged in
   };
 
-  const handleGoTools = () => navigate("/tools");     // ✅ ADD THIS
+  const handleGoTools = () => navigate("/tools");
   const handleGoCourses = () => navigate("/courses");
+
+  // ✅ ADDED: smart navigation ONLY for Home course/tool clicks
+  const goCourseFromHome = (courseId) => {
+    if (loggedIn) navigate(`/courses/${courseId}`);
+    else navigate("/courses");
+  };
+
+  const goToolFromHome = (toolId) => {
+    if (loggedIn) navigate(`/tools/${toolId}`);
+    else navigate("/tools");
+  };
+
   return (
     <>
       <Navbar />
@@ -125,7 +152,6 @@ export default function Home() {
       ------------------------------------------------------ */}
       <section className="hero-bg min-h-[90vh] flex items-center">
         <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-10 px-6 md:px-12 lg:px-20 relative">
-
           {/* Floating Bubbles */}
           <div className="bubble-container absolute inset-0 -z-10">
             {Array.from({ length: 18 }).map((_, i) => (
@@ -147,12 +173,10 @@ export default function Home() {
               </span>
             </h1>
 
-
             <p className="mt-5 text-white/80 text-lg md:text-xl max-w-lg mx-auto lg:mx-0">
               Learn freelancing, design & development — Build your future with
               expert-led courses and real-world projects.
             </p>
-
 
             <div className="mt-8 flex flex-wrap gap-4 justify-center lg:justify-start">
               <button onClick={handleGetStarted} className="btn btn-primary">
@@ -212,7 +236,10 @@ export default function Home() {
       {/* -----------------------------------------------------
         ABOUT SECTION
       ------------------------------------------------------ */}
-      <section id="about" className="max-w-6xl mx-auto px-6 md:px-12 lg:px-20 mt-32 text-white">
+      <section
+        id="about"
+        className="max-w-6xl mx-auto px-6 md:px-12 lg:px-20 mt-32 text-white"
+      >
         <motion.h2
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -223,16 +250,17 @@ export default function Home() {
         </motion.h2>
 
         <p className="text-center text-white/80 text-lg max-w-3xl mx-auto leading-relaxed">
-          SkyUp Campus is a modern digital learning platform designed to help students,
-          freelancers, beginners, and career-changers build real-world skills.
-          We focus on practical, industry-level learning through freelancing,
-          software development, UI/UX, marketing, and creative design.
+          SkyUp Campus is a modern digital learning platform designed to help
+          students, freelancers, beginners, and career-changers build real-world
+          skills. We focus on practical, industry-level learning through
+          freelancing, software development, UI/UX, marketing, and creative
+          design.
         </p>
       </section>
 
       {/* -----------------------------------------------------
-  COURSES SECTION
------------------------------------------------------- */}
+        COURSES SECTION
+      ------------------------------------------------------ */}
       <section
         id="courses"
         className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 mt-32 text-white"
@@ -251,11 +279,7 @@ export default function Home() {
               viewport={{ once: true }}
               className="glass rounded-3xl overflow-hidden hover:scale-[1.02] transition-all backdrop-blur-md"
             >
-              <img
-                src={c.img}
-                alt={c.title}
-                className="h-52 w-full object-cover"
-              />
+              <img src={c.img} alt={c.title} className="h-52 w-full object-cover" />
 
               <div className="p-6">
                 <h3 className="font-semibold text-xl">{c.title}</h3>
@@ -264,9 +288,11 @@ export default function Home() {
                   Learn from industry professionals and build real-world skills.
                 </p>
 
+                {/* ✅ CHANGED ONLY THIS BUTTON */}
                 <button
                   className="btn btn-primary mt-4 w-full"
-                  onClick={() => navigate("/courses")}                >
+                  onClick={() => goCourseFromHome(c.id)}
+                >
                   Enroll Now
                 </button>
               </div>
@@ -275,10 +301,9 @@ export default function Home() {
         </div>
       </section>
 
-
       {/* -----------------------------------------------------
-  TOOLS SECTION
------------------------------------------------------- */}
+        TOOLS SECTION
+      ------------------------------------------------------ */}
       <section
         id="tools"
         className="max-w-6xl mx-auto px-6 md:px-12 lg:px-20 mt-32 text-white"
@@ -295,20 +320,15 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: i * 0.05 }}
               viewport={{ once: true }}
-              onClick={() => navigate("/tools")}
+              /* ✅ CHANGED ONLY THESE HANDLERS */
+              onClick={() => goToolFromHome(tool.id)}
               role="button"
               tabIndex={0}
-              onKeyDown={(e) => e.key === "Enter" && navigate("/tools")}
+              onKeyDown={(e) => e.key === "Enter" && goToolFromHome(tool.id)}
               className="glass rounded-2xl overflow-hidden hover:scale-105 transition-all cursor-pointer"
             >
-              {/* Image */}
-              <img
-                src={tool.img}
-                alt={tool.title}
-                className="h-40 w-full object-cover"
-              />
+              <img src={tool.img} alt={tool.title} className="h-40 w-full object-cover" />
 
-              {/* Content */}
               <div className="p-6 text-center">
                 <h3 className="text-lg font-semibold">{tool.title}</h3>
                 <p className="text-sm text-white/70 mt-2">
@@ -320,12 +340,13 @@ export default function Home() {
         </div>
       </section>
 
-
-
       {/* -----------------------------------------------------
         TESTIMONIALS SECTION
       ------------------------------------------------------ */}
-      <section id="testimonials" className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 mt-32 text-white">
+      <section
+        id="testimonials"
+        className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 mt-32 text-white"
+      >
         <h2 className="text-center text-4xl font-bold mb-12">
           What Our <span className="text-skyup-teal">Students Say</span>
         </h2>
@@ -355,7 +376,7 @@ export default function Home() {
         </Marquee>
       </section>
 
-      {/* 🎉 NEW EVENTS SECTION — FULLY INTEGRATED */}
+      {/* EVENTS */}
       <EventsSection />
 
       {/* Decorative Lottie blobs */}
@@ -369,19 +390,20 @@ export default function Home() {
         <div className="relative z-10 glass grid md:grid-cols-2 overflow-hidden"></div>
       </section>
 
-      {/* -----------------------------------------------------
-          CONTACT SECTION (FIXED)
-      ------------------------------------------------------ */}
-      <section id="contact" className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 mt-32 text-white">
+      {/* CONTACT */}
+      <section
+        id="contact"
+        className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 mt-32 text-white"
+      >
         <h2 className="text-center text-4xl font-bold mb-12">
           Get in <span className="text-skyup-teal">Touch</span>
         </h2>
 
         <div className="glass p-10 rounded-3xl grid grid-cols-1 lg:grid-cols-2 gap-12">
-
-          {/* LEFT: ADDRESS */}
           <div>
-            <h3 className="text-2xl font-semibold mb-4 text-skyup-teal">Our Address</h3>
+            <h3 className="text-2xl font-semibold mb-4 text-skyup-teal">
+              Our Address
+            </h3>
 
             <p className="text-white/80 leading-relaxed">
               No. 331, Trincomalee, Sri Lanka
@@ -392,13 +414,12 @@ export default function Home() {
             </p>
 
             <p className="mt-1 text-white/80">
-              <strong className="text-white">Email:</strong> skyup.official08@gmail.com
+              <strong className="text-white">Email:</strong>{" "}
+              skyup.official08@gmail.com
             </p>
           </div>
 
-          {/* RIGHT: FIXED FORM */}
           <form className="space-y-5">
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <input
                 placeholder="Name"
@@ -430,7 +451,6 @@ export default function Home() {
               Send Message
             </button>
           </form>
-
         </div>
       </section>
 
