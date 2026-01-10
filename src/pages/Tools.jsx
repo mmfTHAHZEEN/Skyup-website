@@ -39,19 +39,18 @@ export default function Tools() {
     return showAllMobile ? tools : tools.slice(0, MOBILE_VISIBLE_COUNT);
   }, [isMobile, showAllMobile]);
 
-  const handleViewDetails = async (toolId) => {
+  const handleToolClick = async (toolId) => {
     const user = auth.currentUser;
 
-    // ❌ Not logged in tool page
     if (!user) {
-      navigate("/signup"); // change to /auth if you use /auth
+      navigate(`/login?from=${encodeURIComponent(`/tools/${toolId}`)}`);
       return;
     }
 
-    // ✅ Enroll tool automatically
+    // enroll (your existing behavior)
     await enrollTool(user.uid, toolId);
 
-    // ➜ Go to tool details
+    // go to details
     navigate(`/tools/${toolId}`);
   };
 
@@ -101,16 +100,14 @@ export default function Tools() {
               </div>
 
               <div className="p-6">
-                {/* Always show title */}
                 <h3 className="text-xl font-semibold">{tool.title}</h3>
 
-                {/* Only show details after login */}
                 {!locked && (
                   <>
                     <p className="text-white/70 text-sm mt-2">{tool.desc}</p>
 
                     <button
-                      onClick={() => handleViewDetails(tool.id)}
+                      onClick={() => handleToolClick(tool.id)}
                       className="btn btn-primary w-full mt-6"
                     >
                       View Details
@@ -118,10 +115,13 @@ export default function Tools() {
                   </>
                 )}
 
-                {/* Optional: locked button */}
                 {locked && (
                   <button
-                    onClick={() => navigate("/signup")} // change to /auth if needed
+                    onClick={() =>
+                      navigate(
+                        `/login?from=${encodeURIComponent(`/tools/${tool.id}`)}`
+                      )
+                    }
                     className="w-full mt-6 py-3 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 transition"
                   >
                     Login to Access

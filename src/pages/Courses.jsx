@@ -72,6 +72,14 @@ export default function Courses() {
     return showAllMobile ? courses : courses.slice(0, MOBILE_VISIBLE_COUNT);
   }, [isMobile, showAllMobile]);
 
+  const handleCourseClick = (courseId) => {
+    if (!loggedIn) {
+      navigate(`/login?from=${encodeURIComponent(`/courses/${courseId}`)}`);
+      return;
+    }
+    navigate(`/courses/${courseId}`);
+  };
+
   return (
     <section className="mx-auto max-w-7xl px-6 md:px-12 lg:px-20 py-20 text-white">
       {/* Heading */}
@@ -95,7 +103,13 @@ export default function Courses() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.08 }}
               viewport={{ once: true }}
-              className="glass rounded-3xl overflow-hidden"
+              className="glass rounded-3xl overflow-hidden cursor-pointer"
+              onClick={() => handleCourseClick(course.id)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") handleCourseClick(course.id);
+              }}
             >
               {/* IMAGE */}
               <div className="relative h-52 w-full overflow-hidden">
@@ -140,7 +154,10 @@ export default function Courses() {
 
                     <button
                       className="btn btn-primary mt-6 w-full"
-                      onClick={() => navigate(`/courses/${course.id}`)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        navigate(`/courses/${course.id}`);
+                      }}
                     >
                       Enroll Now
                     </button>

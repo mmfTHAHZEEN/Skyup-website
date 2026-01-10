@@ -1,23 +1,26 @@
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
+
 import Navbar from "./components/layout/Navbar.jsx";
 import Footer from "./components/layout/Footer.jsx";
 import GradientBG from "./components/ui/GradientBG.jsx";
 import CursorGlow from "./components/ui/CursorGlow.jsx";
 import ScrollProgress from "./components/ui/ScrollProgress.jsx";
+
 import Home from "./pages/Home";
 import Courses from "./pages/Courses";
 import Tools from "./pages/Tools";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
-import Auth from "./pages/Auth";
 import Instructors from "./pages/Instructors.jsx";
 import EventsSection from "./components/EventsSection.jsx";
 import Dashboard from "./pages/Dashboard";
-import RequireAuth from "./pages/RequireAuth";
+
 import CourseDetails from "./pages/CourseDetails";
-import ProtectedRoute from "./components/ProtectedRoute";
 import ToolDetails from "./pages/ToolDetails";
+
+import RequireAuth from "./pages/RequireAuth";
+import Login from "./pages/Login"; // ensure this path matches your project
 
 export default function App() {
   const location = useLocation();
@@ -28,7 +31,7 @@ export default function App() {
       <CursorGlow />
       <Navbar />
       <ScrollProgress />
-      {/* AnimatePresence watches route changes */}
+
       <AnimatePresence mode="wait">
         <motion.main
           key={location.pathname}
@@ -39,30 +42,19 @@ export default function App() {
           transition={{ duration: 0.6, ease: "easeInOut" }}
         >
           <Routes location={location} key={location.pathname}>
+            {/* Public */}
             <Route path="/" element={<Home />} />
             <Route path="/courses" element={<Courses />} />
             <Route path="/tools" element={<Tools />} />
             <Route path="/events" element={<EventsSection />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/auth" element={<Auth />} />
             <Route path="/instructors" element={<Instructors />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/courses/:courseId" element={<CourseDetails />} />
-            <Route path="/tools/:toolId" element={<ToolDetails />} />
 
-            {/* Public */}
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Auth />} />
-
-            <Route
-              path="/dashboard"
-              element={
-                <ProtectedRoute>
-                  <Dashboard />
-                </ProtectedRoute>
-              }
-            />
+            {/* Login */}
+            <Route path="/login" element={<Login />} />
+            {/* Optional: keep /auth working if you already use it */}
+            <Route path="/auth" element={<Navigate to="/login" replace />} />
 
             {/* Protected */}
             <Route
@@ -73,33 +65,25 @@ export default function App() {
                 </RequireAuth>
               }
             />
-
             <Route
-              path="/courses"
+              path="/courses/:courseId"
               element={
                 <RequireAuth>
-                  <Courses />
+                  <CourseDetails />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/tools/:toolId"
+              element={
+                <RequireAuth>
+                  <ToolDetails />
                 </RequireAuth>
               }
             />
 
-            <Route
-              path="/tools"
-              element={
-                <RequireAuth>
-                  <Tools />
-                </RequireAuth>
-              }
-            />
-
-            <Route
-              path="/instructors"
-              element={
-                <RequireAuth>
-                  <Instructors />
-                </RequireAuth>
-              }
-            />
+            {/* Fallback */}
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </motion.main>
       </AnimatePresence>
