@@ -21,7 +21,7 @@ import ToolDetails from "./pages/ToolDetails";
 
 import RequireAuth from "./pages/RequireAuth";
 import Login from "./pages/Login"; // ensure this path matches your project
-
+import Signup from "./pages/Signup";
 export default function App() {
   const location = useLocation();
 
@@ -53,6 +53,7 @@ export default function App() {
 
             {/* Login */}
             <Route path="/login" element={<Login />} />
+            <Route path="/Signup" element={<Signup />} />
             {/* Optional: keep /auth working if you already use it */}
             <Route path="/auth" element={<Navigate to="/login" replace />} />
 

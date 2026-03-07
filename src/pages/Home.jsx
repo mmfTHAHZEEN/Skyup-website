@@ -7,6 +7,7 @@ import Lottie from "react-lottie-player";
 import LottieBlob from "../components/ui/LottieBlob";
 import LottieLayeredBlobs from "../components/ui/LottieLayeredBlobs";
 import studentImg from "../assets/student.png";
+
 import floatingBook from "../assets/lottie-book.json";
 import floatingLaptop from "../assets/lottie-laptop.json";
 import floatingCode from "../assets/lottie-code.json";
@@ -17,6 +18,7 @@ import Hero from "../components/home/Hero";
 import Testimonials from "../components/home/Testimonials";
 import Footer from "../components/layout/Footer";
 import Instructors from "./Instructors";
+import { courses } from "../data/course";
 
 /* --------------------------------------------------
    TESTIMONIAL DATA
@@ -55,38 +57,38 @@ const testimonials = [
 /* --------------------------------------------------
    COURSE DATA (✅ ADDED ids)
 -------------------------------------------------- */
-const courses = [
-  {
-    id: "it-statistics",
-    title: "IT Statistics & Data Science",
-    img: "https://images.unsplash.com/photo-1581090700227-1e37b190418e?q=80&w=1200",
-  },
-  {
-    id: "illustrator",
-    title: "Adobe Illustrator for Graphic Design",
-    img: "https://images.unsplash.com/photo-1587614382346-4ec65b7d3a9f?q=80&w=1200",
-  },
-  {
-    id: "seo",
-    title: "SEO for Your Home-Based Business",
-    img: "https://images.unsplash.com/photo-1581093458791-9b6c9737e9d7?q=80&w=1200",
-  },
-  {
-    id: "freelancing",
-    title: "Advanced Freelancing Strategies",
-    img: "https://images.unsplash.com/photo-1581092334651-3c7d1f2d6b67?q=80&w=1200",
-  },
-  {
-    id: "fiverr-upwork",
-    title: "Fiverr & Upwork Profile Building",
-    img: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=1200",
-  },
-  {
-    id: "graphic-design",
-    title: "Graphic Design Fundamentals",
-    img: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1200",
-  },
-];
+// const courses = [
+//   {
+//     id: "it-statistics",
+//     title: "IT Statistics & Data Science",
+//     img: { studentImg },
+//   },
+//   {
+//     id: "illustrator",
+//     title: "Adobe Illustrator for Graphic Design",
+//     img: "https://images.unsplash.com/photo-1581090700227-1e37b190418e?q=80&w=1200",
+//   },
+//   {
+//     id: "seo",
+//     title: "SEO for Your Home-Based Business",
+//     img: "https://images.unsplash.com/photo-1581093458791-9b6c9737e9d7?q=80&w=1200",
+//   },
+//   {
+//     id: "freelancing",
+//     title: "Advanced Freelancing Strategies",
+//     img: "https://images.unsplash.com/photo-1581092334651-3c7d1f2d6b67?q=80&w=1200",
+//   },
+//   {
+//     id: "fiverr-upwork",
+//     title: "Fiverr & Upwork Profile Building",
+//     img: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=1200",
+//   },
+//   {
+//     id: "graphic-design",
+//     title: "Graphic Design Fundamentals",
+//     img: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1200",
+//   },
+// ];
 
 /* --------------------------------------------------
    TOOLS DATA (✅ ADDED ids)
@@ -174,8 +176,9 @@ export default function Home() {
             </h1>
 
             <p className="mt-5 text-white/80 text-lg md:text-xl max-w-lg mx-auto lg:mx-0">
-              Learn freelancing, design & development — Build your future with
-              expert-led courses and real-world projects.
+              Learn with SkyUp — the best in online education.
+              Success doesn’t come to you; you have to go to it.
+              Enroll now and take charge of your future.
             </p>
 
             <div className="mt-8 flex flex-wrap gap-4 justify-center lg:justify-start">
@@ -250,11 +253,8 @@ export default function Home() {
         </motion.h2>
 
         <p className="text-center text-white/80 text-lg max-w-3xl mx-auto leading-relaxed">
-          SkyUp Campus is a modern digital learning platform designed to help
-          students, freelancers, beginners, and career-changers build real-world
-          skills. We focus on practical, industry-level learning through
-          freelancing, software development, UI/UX, marketing, and creative
-          design.
+          SkyUp (PVT) LTD empowers future digital professionals through freelancing courses and hands-on training, helping individuals build sustainable online careers.
+          In addition, the company provides professional services in software development, IT solutions, digital marketing, and content creation, supporting both students and businesses in achieving growth and success in the digital era.
         </p>
       </section>
 
@@ -270,7 +270,7 @@ export default function Home() {
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-          {courses.map((c, i) => (
+          {courses.map((courses, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 25 }}
@@ -279,10 +279,10 @@ export default function Home() {
               viewport={{ once: true }}
               className="glass rounded-3xl overflow-hidden hover:scale-[1.02] transition-all backdrop-blur-md"
             >
-              <img src={c.img} alt={c.title} className="h-52 w-full object-cover" />
+              <img src={courses.img} alt={courses.title} className="h-64 w-full object-cover" />
 
               <div className="p-6">
-                <h3 className="font-semibold text-xl">{c.title}</h3>
+                <h3 className="font-semibold text-xl">{courses.title}</h3>
 
                 <p className="text-sm text-white/70 mt-2">
                   Learn from industry professionals and build real-world skills.
@@ -291,7 +291,7 @@ export default function Home() {
                 {/* ✅ CHANGED ONLY THIS BUTTON */}
                 <button
                   className="btn btn-primary mt-4 w-full"
-                  onClick={() => goCourseFromHome(c.id)}
+                  onClick={() => goCourseFromHome(courses.id)}
                 >
                   Enroll Now
                 </button>

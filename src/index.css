@@ -3,7 +3,9 @@
 @tailwind utilities;
 
 /* GLOBAL LAYOUT RESET */
-html, body, #root {
+html,
+body,
+#root {
   height: 100%;
   width: 100%;
   margin: 0;
@@ -35,6 +37,7 @@ body {
 .btn-primary {
   @apply bg-gradient-to-r from-skyup-purple to-skyup-teal text-white shadow-lg;
 }
+
 .btn-primary:hover {
   @apply opacity-90 shadow-xl;
 }
@@ -52,9 +55,11 @@ body {
 .h1 {
   @apply text-4xl md:text-5xl font-bold;
 }
+
 .h2 {
   @apply text-3xl md:text-4xl font-bold;
 }
+
 .h3 {
   @apply text-2xl font-semibold;
 }
@@ -68,8 +73,17 @@ body {
 .animate-float {
   animation: floatAnim 6s ease-in-out infinite;
 }
+
 @keyframes floatAnim {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-12px); }
-  100% { transform: translateY(0px); }
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-12px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
 }
